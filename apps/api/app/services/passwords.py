@@ -29,4 +29,15 @@ def password_problem(password: str, email: str | None) -> str | None:
         return "password_too_common"
     if len(set(password)) < 4:
         return "password_too_common"
+    # Kuchli parol: kichik harf, katta harf, raqam, belgi — kamida 3 turi
+    kinds = sum(
+        (
+            any(c.islower() for c in password),
+            any(c.isupper() for c in password),
+            any(c.isdigit() for c in password),
+            any(not c.isalnum() for c in password),
+        )
+    )
+    if kinds < 3:
+        return "password_too_weak"
     return None

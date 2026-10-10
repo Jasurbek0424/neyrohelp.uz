@@ -310,6 +310,43 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/admin/auth/telegram/link": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Telegram Link
+         * @description Telegram ID'ga tasdiqlash kodi yuboriladi. Avval botda /start bosilgan bo‘lishi kerak.
+         */
+        post: operations["telegram_link_api_v1_admin_auth_telegram_link_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/auth/telegram/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Telegram Confirm */
+        post: operations["telegram_confirm_api_v1_admin_auth_telegram_confirm_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/admin/auth/password": {
         parameters: {
             query?: never;
@@ -786,6 +823,26 @@ export interface paths {
         patch: operations["patch_user_api_v1_admin_users__user_id__patch"];
         trace?: never;
     };
+    "/api/v1/admin/users/{user_id}/password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Set User Password
+         * @description Administrator xodimga yangi parol beradi (unutgan bo‘lsa). O‘z parolini — Profil sahifasida.
+         */
+        post: operations["set_user_password_api_v1_admin_users__user_id__password_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/admin/users/{user_id}/revoke-sessions": {
         parameters: {
             query?: never;
@@ -959,8 +1016,11 @@ export interface components {
         AuditOut: {
             /** Id */
             id: number;
+            /** User Id */
+            user_id?: number | null;
             /** User Name */
             user_name: string | null;
+            user_role?: components["schemas"]["Role"] | null;
             /** Action */
             action: string;
             /** Entity */
@@ -1933,12 +1993,21 @@ export interface components {
             password: string;
             /** Totp */
             totp?: string | null;
+            /**
+             * Remember
+             * @default false
+             */
+            remember: boolean;
         };
         /** LoginOut */
         LoginOut: {
             user?: components["schemas"]["Me"] | null;
             /** Requires Totp */
             requires_totp?: boolean | null;
+            /** Method */
+            method?: ("telegram" | "app") | null;
+            /** Code Sent */
+            code_sent?: boolean | null;
         };
         /** Me */
         Me: {
@@ -1952,11 +2021,27 @@ export interface components {
             /** Totp Enabled */
             totp_enabled: boolean;
             /**
+             * Telegram 2Fa
+             * @default false
+             */
+            telegram_2fa: boolean;
+            /**
+             * Telegram Hint
+             * @description ulangan Telegram ID (maskalangan)
+             */
+            telegram_hint?: string | null;
+            /**
              * Totp Required
              * @description admin/editor 2FA o‘rnatmagan — frontend sozlashga yo‘naltiradi
              * @default false
              */
             totp_required: boolean;
+            /**
+             * Twofa Available
+             * @description 2FA tizimda yoqilganmi (TWOFA_ENABLED)
+             * @default false
+             */
+            twofa_available: boolean;
         };
         /** MediaOut */
         MediaOut: {
@@ -2676,6 +2761,11 @@ export interface components {
             /** Label */
             label: string;
         };
+        /** TelegramLinkIn */
+        TelegramLinkIn: {
+            /** Telegram Id */
+            telegram_id: number;
+        };
         /** TelegramStat */
         TelegramStat: {
             /** Enabled */
@@ -2788,6 +2878,11 @@ export interface components {
             is_active: boolean;
             /** Totp Enabled */
             totp_enabled: boolean;
+            /**
+             * Telegram 2Fa
+             * @default false
+             */
+            telegram_2fa: boolean;
             /** Last Login At */
             last_login_at: string | null;
             /** Locked Until */
@@ -2797,6 +2892,11 @@ export interface components {
              * Format: date-time
              */
             created_at: string;
+        };
+        /** UserPasswordIn */
+        UserPasswordIn: {
+            /** Password */
+            password: string;
         };
         /** UserPatch */
         UserPatch: {
@@ -3324,6 +3424,70 @@ export interface operations {
         };
     };
     totp_enable_api_v1_admin_auth_totp_enable_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TotpEnableIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Me"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    telegram_link_api_v1_admin_auth_telegram_link_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TelegramLinkIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    telegram_confirm_api_v1_admin_auth_telegram_confirm_post: {
         parameters: {
             query?: never;
             header?: never;
@@ -4722,6 +4886,39 @@ export interface operations {
             };
         };
     };
+    set_user_password_api_v1_admin_users__user_id__password_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserPasswordIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     revoke_sessions_api_v1_admin_users__user_id__revoke_sessions_post: {
         parameters: {
             query?: never;
@@ -4755,6 +4952,10 @@ export interface operations {
         parameters: {
             query?: {
                 action?: string | null;
+                group?: ("auth" | "leads" | "content" | "prices" | "users") | null;
+                user_id?: number | null;
+                date_from?: string | null;
+                date_to?: string | null;
                 page?: number;
                 limit?: number;
             };

@@ -14,6 +14,7 @@ os.environ.update(
         "REDIS_URL": "redis://127.0.0.1:6379/15",
         "MEDIA_DIR": _MEDIA,
         "COOKIE_SECURE": "false",
+        "TWOFA_ENABLED": "true",
     }
 )
 for _k in ("TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID", "TELEGRAM_WEBHOOK_SECRET"):

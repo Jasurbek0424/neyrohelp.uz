@@ -17,7 +17,7 @@ export function MobileTabBar({ me }: { me: Me }) {
     ...(canAccess(me.role, 'leads') ? [{ href: adminPaths.leads, label: 'Arizalar', icon: 'leads' as const, match: [adminPaths.leads] }] : []),
     { href: adminPaths.dashboard, label: 'Bosh panel', icon: 'dashboard', match: [adminPaths.dashboard] },
     ...(canAccess(me.role, 'posts')
-      ? [{ href: adminPaths.posts, label: 'Kontent', icon: 'posts' as const, match: [adminPaths.posts, adminPaths.doctors, adminPaths.services, adminPaths.settings, adminPaths.users] }]
+      ? [{ href: adminPaths.posts, label: 'Kontent', icon: 'posts' as const, match: [adminPaths.posts, adminPaths.doctors, adminPaths.services, adminPaths.settings, adminPaths.users, adminPaths.audit] }]
       : []),
     { href: adminPaths.profile, label: 'Profil', icon: 'profile', match: [adminPaths.profile] },
   ]

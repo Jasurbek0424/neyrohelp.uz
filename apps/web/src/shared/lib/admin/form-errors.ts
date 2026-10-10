@@ -29,6 +29,7 @@ const typeMessages: Record<string, string> = {
   password_too_short: 'Kamida 12 belgi',
   password_same_as_email: 'Parol email bilan bir xil bo‘lmasin',
   password_too_common: 'Juda oddiy parol — boshqasini tanlang',
+  password_too_weak: 'Kichik va katta harf, raqam, belgidan kamida 3 turini ishlating',
   timezone_aware: 'Sana vaqt mintaqasi bilan bo‘lishi kerak',
 }
 
@@ -46,12 +47,17 @@ export function fieldErrorsFrom(err: unknown): Record<string, string> {
 const detailMessages: Record<string, string> = {
   invalid_credentials: 'Email yoki parol noto‘g‘ri.',
   invalid_totp: 'Kod noto‘g‘ri yoki eskirgan.',
-  invalid_code: 'Kod noto‘g‘ri yoki eskirgan. Ilovadagi yangi kodni kiriting.',
+  invalid_code: 'Kod noto‘g‘ri yoki eskirgan. Yangi kodni kiriting.',
+  telegram_unreachable: 'Telegram’ga yuborib bo‘lmadi. ID to‘g‘riligini tekshiring va botda /start bosilganiga ishonch hosil qiling.',
+  telegram_unavailable: 'Telegram hozir javob bermayapti. Birozdan keyin qayta urinib ko‘ring.',
+  telegram_not_configured: 'Telegram bot sozlanmagan (TWOFA_BOT_TOKEN). Administratorga murojaat qiling.',
+  telegram_not_linked: 'Telegram ulanmagan.',
   totp_required: 'Davom etish uchun avval ikki bosqichli himoyani (2FA) yoqing.',
-  cannot_modify_self: 'O‘z hisobingizning rolini yoki holatini o‘zgartira olmaysiz.',
+  cannot_modify_self: 'O‘z hisobingizni bu yerda o‘zgartira olmaysiz — Profil sahifasidan foydalaning.',
   password_too_short: 'Yangi parol kamida 12 belgidan iborat bo‘lishi kerak.',
   password_same_as_email: 'Parol email manzili bilan bir xil bo‘lmasligi kerak.',
   password_too_common: 'Bu parol juda keng tarqalgan. Uzunroq va noyob ibora tanlang.',
+  password_too_weak: 'Parol kuchsiz: kichik va katta harf, raqam, belgidan kamida 3 turini ishlating.',
   locked: 'Hisob vaqtincha bloklangan. 15 daqiqadan keyin urinib ko‘ring.',
   rate_limited: 'Juda ko‘p urinish. Birozdan keyin qayta urinib ko‘ring.',
   too_many_requests: 'Juda ko‘p urinish. Birozdan keyin qayta urinib ko‘ring.',

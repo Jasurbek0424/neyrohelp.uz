@@ -37,7 +37,7 @@ export function AdminProfilePage() {
               {pending ? 'Chiqilmoqda…' : 'Tizimdan chiqish'}
             </AdminButton>
           </Card>
-          <TwoFactorCard me={me} />
+          {me.twofa_available && <TwoFactorCard me={me} />}
           <ChangePasswordForm />
         </div>
       </main>

@@ -40,10 +40,12 @@ from app.schemas.admin import (
     LoginOut,
     Me,
     PasswordIn,
+    TelegramLinkIn,
     TotpEnableIn,
     TotpSetupOut,
     UserEnvelope,
 )
+from app.services import twofa
 from app.services.passwords import password_problem
 
 from ._common import audit, invalid
@@ -72,6 +74,28 @@ async def _hash(password: str) -> str:
         return await run_in_threadpool(hash_password, password)
 
 
+def _mask(value: int | None) -> str | None:
+    if not value:
+        return None
+    v = str(value)
+    return f"{v[:2]}{'•' * max(len(v) - 4, 2)}{v[-2:]}"
+
+
+def _twofa_http(e: twofa.TwofaError) -> HTTPException:
+    return HTTPException(e.status, e.detail)
+
+
+def set_trust_cookie(response: Response, user: User) -> None:
+    response.set_cookie(
+        twofa.TRUST_COOKIE,
+        twofa.create_trust_token(user),
+        max_age=settings.trusted_device_days * 86400,
+        path=REFRESH_PATH,
+        httponly=True,
+        **_cookie_kwargs(),
+    )
+
+
 def me_out(user: User) -> Me:
     return Me(
         id=user.id,
@@ -79,7 +103,10 @@ def me_out(user: User) -> Me:
         name=user.name,
         role=user.role,
         totp_enabled=user.totp_enabled,
+        telegram_2fa=user.telegram_2fa,
+        telegram_hint=_mask(user.telegram_id) if user.telegram_2fa else None,
         totp_required=totp_required(user),
+        twofa_available=settings.twofa_enabled,
     )
 
 
@@ -231,12 +258,28 @@ async def login(body: LoginIn, request: Request, response: Response, session: Se
     if not ok:
         raise await fail("invalid_credentials")
 
-    if user.totp_enabled:
+    has_2fa = settings.twofa_enabled and (user.totp_enabled or user.telegram_2fa)
+    passed_2fa = False
+    if has_2fa and twofa.trust_valid(request.cookies.get(twofa.TRUST_COOKIE), user):
+        pass  # "eslab qolingan" qurilma — kod so‘ralmaydi
+    elif has_2fa:
         if not body.totp:
-            await session.commit()
-            return LoginOut(requires_totp=True)
-        if not verify_totp(user.totp_secret, body.totp) or not await _totp_fresh(user.id, body.totp):
+            await session.commit()  # qatordagi qulfni Telegram so‘rovidan oldin bo‘shatamiz
+            if user.telegram_2fa:
+                try:
+                    sent = await twofa.send_login_code(user)
+                except twofa.TwofaError as e:
+                    if not user.totp_enabled:
+                        raise _twofa_http(e) from e
+                    return LoginOut(requires_totp=True, method="app")
+                return LoginOut(requires_totp=True, method="telegram", code_sent=sent)
+            return LoginOut(requires_totp=True, method="app")
+        ok_code = False
+        if user.telegram_2fa and await twofa.check_login_code(user, body.totp) or user.totp_enabled and verify_totp(user.totp_secret, body.totp) and await _totp_fresh(user.id, body.totp):
+            ok_code = True
+        if not ok_code:
             raise await fail("invalid_totp")
+        passed_2fa = True
 
     user.failed_logins = 0
     user.locked_until = None
@@ -244,7 +287,9 @@ async def login(body: LoginIn, request: Request, response: Response, session: Se
     if needs_rehash(user.password_hash):
         user.password_hash = await _hash(body.password)
     issue_session(session, request, response, user)
-    audit(session, request, user, "login_success", "user", user.id)
+    if passed_2fa and body.remember:
+        set_trust_cookie(response, user)
+    audit(session, request, user, "login_success", "user", user.id, {"trusted_device": has_2fa and not passed_2fa} if has_2fa else None)
     await session.commit()
     return LoginOut(user=me_out(user))
 
@@ -338,6 +383,32 @@ async def totp_enable(body: TotpEnableIn, request: Request, user: CurrentUser, s
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "invalid_code")
     user.totp_enabled = True
     audit(session, request, user, "totp_enabled", "user", user.id)
+    await session.commit()
+    return me_out(user)
+
+
+@router.post("/telegram/link", status_code=status.HTTP_204_NO_CONTENT)
+async def telegram_link(body: TelegramLinkIn, request: Request, user: CurrentUser, session: SessionDep):
+    """Telegram ID'ga tasdiqlash kodi yuboriladi. Avval botda /start bosilgan bo‘lishi kerak."""
+    await enforce(f"tglink:{user.id}", 5, LOGIN_WINDOW)
+    try:
+        await twofa.send_link_code(user, body.telegram_id)
+    except twofa.TwofaError as e:
+        raise _twofa_http(e) from e
+    audit(session, request, user, "telegram_link_requested", "user", user.id)
+    await session.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.post("/telegram/confirm", response_model=Me)
+async def telegram_confirm(body: TotpEnableIn, request: Request, user: CurrentUser, session: SessionDep):
+    await enforce(f"tgconfirm:{user.id}", 10, LOGIN_WINDOW)
+    chat_id = await twofa.check_link_code(user, body.code)
+    if chat_id is None:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "invalid_code")
+    user.telegram_id = chat_id
+    user.telegram_2fa = True
+    audit(session, request, user, "telegram_2fa_enabled", "user", user.id)
     await session.commit()
     return me_out(user)
 

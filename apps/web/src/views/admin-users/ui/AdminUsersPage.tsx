@@ -5,16 +5,14 @@ import { useState } from 'react'
 
 import { useMe } from '@/widgets/admin-shell'
 import { CreateUserDialog, UserRoleSelect, UserRowActions } from '@/features/admin-user-manage'
-import { auditQuery, usersQuery, type AdminUser } from '@/entities/admin-user'
+import { usersQuery, type AdminUser } from '@/entities/admin-user'
 import { UserAvatar } from '@/entities/session'
 import { errorMessage } from '@/shared/lib/admin/form-errors'
 import { relativeDayTime } from '@/shared/lib/admin/time'
 import { useNow } from '@/shared/lib/hooks/useNow'
-import { useUrlState } from '@/shared/lib/hooks/useUrlState'
 import { AdminButton } from '@/shared/ui/admin/Button'
 import { EmptyState, ErrorState } from '@/shared/ui/admin/EmptyState'
 import { PlusIcon } from '@/shared/ui/admin/icons'
-import { Pagination } from '@/shared/ui/admin/Pagination'
 import { SkeletonRows } from '@/shared/ui/admin/Skeleton'
 import { StatusTag } from '@/shared/ui/admin/StatusTag'
 import { Topbar } from '@/shared/ui/admin/Topbar'
@@ -28,15 +26,10 @@ function UserState({ u, now }: { u: AdminUser; now: number }) {
   return <StatusTag tone="ok">Faol</StatusTag>
 }
 
-const KEYS = ['audit'] as const
-
-/** Xodimlar (faqat admin): rol (optimistic), bloklash, sessiyalarni yopish + audit jurnali */
+/** Xodimlar (faqat admin): qo‘shish, rol (optimistic), parol berish, bloklash, sessiyalarni yopish. Jurnal — /admin/jurnal */
 export function AdminUsersPage() {
   const me = useMe()
   const users = useQuery(usersQuery())
-  const [url, setUrl] = useUrlState(KEYS)
-  const auditPage = Math.max(1, Number(url.audit) || 1)
-  const audit = useQuery(auditQuery(auditPage))
   const [create, setCreate] = useState(false)
   const now = useNow(60_000)
 
@@ -69,16 +62,18 @@ export function AdminUsersPage() {
                   <th scope="col" className={`${th} w-[200px]`}>
                     Rol
                   </th>
-                  <th scope="col" className={`${th} w-[110px]`}>
-                    2FA
-                  </th>
+                  {me.twofa_available && (
+                    <th scope="col" className={`${th} w-[110px]`}>
+                      2FA
+                    </th>
+                  )}
                   <th scope="col" className={`${th} w-[150px]`}>
                     Oxirgi kirish
                   </th>
                   <th scope="col" className={`${th} w-[160px]`}>
                     Holat
                   </th>
-                  <th scope="col" className={`${th} w-[250px] text-right`}>
+                  <th scope="col" className={`${th} w-[330px] text-right`}>
                     <span className="sr-only">Amallar</span>
                   </th>
                 </tr>
@@ -103,7 +98,7 @@ export function AdminUsersPage() {
                       <td className={td}>
                         <UserRoleSelect user={u} disabled={self} />
                       </td>
-                      <td className={td}>{u.totp_enabled ? <StatusTag tone="ok">Yoqilgan</StatusTag> : <StatusTag tone={u.role === 'operator' ? 'neutral' : 'warn'}>Yo‘q</StatusTag>}</td>
+                      {me.twofa_available && <td className={td}>{u.totp_enabled || u.telegram_2fa ? <StatusTag tone="ok">{u.telegram_2fa ? 'Telegram' : 'Ilova'}</StatusTag> : <StatusTag tone={u.role === 'operator' ? 'neutral' : 'warn'}>Yo‘q</StatusTag>}</td>}
                       <td className={`${td} text-[13px] text-ink-2 tabular-nums`}>{u.last_login_at ? relativeDayTime(u.last_login_at) : 'Hali kirmagan'}</td>
                       <td className={td}>
                         <UserState u={u} now={now} />
@@ -119,59 +114,6 @@ export function AdminUsersPage() {
           )}
         </section>
 
-        <section aria-labelledby="audit-title" className="overflow-x-auto rounded-card border border-line bg-white">
-          <div className="flex h-14 items-center justify-between px-4">
-            <h2 id="audit-title" className="m-0 text-base font-semibold">
-              Audit jurnali
-            </h2>
-            <span className="text-xs text-ink-2">Kirishlar, rol o‘zgarishi, eksport, o‘chirish, narxlar</span>
-          </div>
-          {audit.isPending ? (
-            <SkeletonRows rows={5} height={44} />
-          ) : audit.isError ? (
-            <ErrorState message={errorMessage(audit.error)} onRetry={() => audit.refetch()} />
-          ) : !audit.data.items.length ? (
-            <EmptyState title="Hozircha yozuv yo‘q" />
-          ) : (
-            <table className="w-full min-w-[760px] table-fixed border-collapse text-sm" aria-busy={audit.isFetching}>
-              <thead className="bg-(--am-bg) text-left text-xs text-ink-2">
-                <tr className="h-10">
-                  <th scope="col" className={`${th} w-[150px]`}>
-                    Vaqt
-                  </th>
-                  <th scope="col" className={`${th} w-[180px]`}>
-                    Xodim
-                  </th>
-                  <th scope="col" className={th}>
-                    Amal
-                  </th>
-                  <th scope="col" className={`${th} w-[180px]`}>
-                    Obyekt
-                  </th>
-                  <th scope="col" className={`${th} w-[140px]`}>
-                    IP
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {audit.data.items.map((a) => (
-                  <tr key={a.id} className="h-11">
-                    <td className={`${td} text-[13px] text-ink-2 tabular-nums`}>{relativeDayTime(a.created_at)}</td>
-                    <td className={`${td} truncate`}>{a.user_name ?? '—'}</td>
-                    <td className={`${td} truncate font-mono text-[13px]`}>{a.action}</td>
-                    <td className={`${td} truncate text-[13px] text-ink-2`}>{a.entity ? `${a.entity}${a.entity_id ? ` #${a.entity_id}` : ''}` : '—'}</td>
-                    <td className={`${td} text-[13px] text-ink-2 tabular-nums`}>{a.ip ?? '—'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-          {audit.data && audit.data.pages > 1 && (
-            <div className="flex h-[52px] items-center justify-end px-4">
-              <Pagination page={auditPage} pages={audit.data.pages} onChange={(p) => setUrl({ audit: p === 1 ? null : p })} />
-            </div>
-          )}
-        </section>
       </main>
       <CreateUserDialog open={create} onClose={() => setCreate(false)} />
     </>

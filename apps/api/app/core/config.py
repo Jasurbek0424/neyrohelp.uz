@@ -34,6 +34,11 @@ class Settings(BaseSettings):
     telegram_chat_id: str | None = None
     telegram_webhook_secret: SecretStr | None = None
     telegram_api_base: str = "https://api.telegram.org"
+    # Ikki bosqichli kirish. Hozircha o‘chiq (faqat login + kuchli parol); kod saqlangan — keyin yoqiladi
+    twofa_enabled: bool = False
+    # 2FA kodlarini yuboradigan bot (masalan Farm Bot). Bo‘sh bo‘lsa — arizalar boti ishlatiladi
+    twofa_bot_token: SecretStr | None = None
+    trusted_device_days: int = 30
 
     lead_retention_days: int = 365
     public_cache_ttl: int = 600  # Redis, soniya

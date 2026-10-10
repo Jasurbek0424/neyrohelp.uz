@@ -15,5 +15,5 @@ export type PasswordBody = S['PasswordIn']
 export const roleLabels: Record<Role, string> = {
   admin: 'Administrator',
   editor: 'Muharrir',
-  operator: 'Operator',
+  operator: 'Call-operator',
 }

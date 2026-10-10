@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import Role, User
 
+from .config import settings
 from .db import get_session
 from .ratelimit import enforce
 from .security import ACCESS_COOKIE, CSRF_COOKIE, CSRF_HEADER, csrf_valid, decode_access_token
@@ -42,7 +43,9 @@ TOTP_ROLES = {Role.admin, Role.editor}
 
 def totp_required(user: User) -> bool:
     """Administrator va muharrir uchun 2FA majburiy (ARCHITECTURE.md → Xavfsizlik)."""
-    return user.role in TOTP_ROLES and not user.totp_enabled
+    if not settings.twofa_enabled:
+        return False
+    return user.role in TOTP_ROLES and not (user.totp_enabled or user.telegram_2fa)
 
 
 def require_role(*roles: Role) -> Callable:

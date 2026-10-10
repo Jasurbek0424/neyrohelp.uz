@@ -39,4 +39,6 @@ export const login = (body: LoginBody) => api<LoginResponse>('/admin/auth/login'
 export const logoutRequest = () => api<void>('/admin/auth/logout', { method: 'POST' })
 export const totpSetup = () => api<TotpSetup>('/admin/auth/totp/setup', { method: 'POST' })
 export const totpEnable = (code: string) => api<Me>('/admin/auth/totp/enable', { method: 'POST', body: { code } })
+export const telegramLink = (telegram_id: number) => api<void>('/admin/auth/telegram/link', { method: 'POST', body: { telegram_id } })
+export const telegramConfirm = (code: string) => api<Me>('/admin/auth/telegram/confirm', { method: 'POST', body: { code } })
 export const changePassword = (body: PasswordBody) => api<void>('/admin/auth/password', { method: 'POST', body })

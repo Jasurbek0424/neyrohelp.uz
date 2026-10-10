@@ -35,7 +35,16 @@ npm install
 npm run dev                        # http://localhost:3000 · admin: /admin
 ```
 
-Admin birinchi kirishda 2FA (Google Authenticator va h.k.) ni sozlashni talab qiladi.
+Kirish: email + kuchli parol (kamida 12 belgi; kichik/katta harf, raqam, belgidan kamida 3 turi).
+Ikki bosqichli kirish (Telegram kodi / Authenticator) kodda tayyor, lekin hozircha o'chiq: yoqish uchun `TWOFA_ENABLED=true`
+va `TWOFA_BOT_TOKEN` (masalan Farm Bot tokeni).
+
+Xodimlar (faqat administrator): Xodimlar → «Xodim qo'shish» (rol, login, parol — «Yaratish» kuchli parol beradi),
+«Parol berish» (unutgan xodimga yangi parol), bloklash, sessiyalarni yopish.
+Jurnal (faqat administrator): kim, qachon, nima qildi — xodim, amal turi va sana bo'yicha filtr.
+Call-operator arizalarni oladi va statusini o'zgartiradi; har biri jurnalga yoziladi.
+
+Favqulodda (telefon/Telegram yo'q): `uv run python -m app.reset_2fa admin@neyromed.uz` — 2FA o'chadi, keyingi kirishda qayta sozlanadi.
 
 ## Buyruqlar
 

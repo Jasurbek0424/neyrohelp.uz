@@ -33,6 +33,7 @@ export const navGroups: NavGroup[] = [
     items: [
       { key: 'settings', label: 'Sayt sozlamalari', href: adminPaths.settings, icon: 'settings', section: 'settings' },
       { key: 'users', label: 'Xodimlar', href: adminPaths.users, icon: 'users', section: 'users' },
+      { key: 'audit', label: 'Jurnal', href: adminPaths.audit, icon: 'clock', section: 'audit' },
     ],
   },
 ]

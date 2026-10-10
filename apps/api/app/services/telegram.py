@@ -9,7 +9,7 @@ import httpx
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings
-from app.models import Delivery, Lead, LeadEvent, LeadStatus
+from app.models import AuditLog, Delivery, Lead, LeadEvent, LeadStatus
 
 from .phone import format_uz_phone
 
@@ -36,8 +36,9 @@ class TelegramError(Exception):
     pass
 
 
-async def call(method: str, payload: dict) -> dict:
-    token = settings.telegram_bot_token.get_secret_value() if settings.telegram_bot_token else ""
+async def call(method: str, payload: dict, token: str | None = None) -> dict:
+    if token is None:
+        token = settings.telegram_bot_token.get_secret_value() if settings.telegram_bot_token else ""
     async with httpx.AsyncClient(timeout=8) as client:
         res = await client.post(f"{settings.telegram_api_base}/bot{token}/{method}", json=payload)
     try:
@@ -191,6 +192,7 @@ async def handle_update(session: AsyncSession, update: dict) -> None:
             lead.taken_by = who
             lead.taken_at = datetime.now(UTC)
             session.add(LeadEvent(lead_id=lead.id, kind="taken", actor=who, meta={"via": "telegram"}))
+            session.add(AuditLog(action="lead_take", entity="lead", entity_id=str(lead.id), meta={"via": "telegram", "actor": who}))
             reply, changed = "Ariza sizga biriktirildi", True
     elif action == "st" and len(parts) == 3:
         try:
@@ -200,6 +202,14 @@ async def handle_update(session: AsyncSession, update: dict) -> None:
         if new in FINAL_FROM_TELEGRAM and lead.status == LeadStatus.in_progress:
             lead.status = new
             session.add(LeadEvent(lead_id=lead.id, kind="status", actor=who, meta={"status": new.value, "via": "telegram"}))
+            session.add(
+                AuditLog(
+                    action="lead_status",
+                    entity="lead",
+                    entity_id=str(lead.id),
+                    meta={"from": LeadStatus.in_progress.value, "to": new.value, "via": "telegram", "actor": who},
+                )
+            )
             reply, changed = f"Status: {STATUS_TEXT[new]}", True
     await session.commit()
     if changed:

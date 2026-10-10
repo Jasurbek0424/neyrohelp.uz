@@ -91,7 +91,14 @@ export function AdminShell({ children }: { children: ReactNode }) {
   if (me.isError)
     return (
       <div className="flex h-dvh items-center justify-center">
-        <ErrorState message="Server bilan aloqa yo‘q. Internetni tekshirib, qayta urinib ko‘ring." onRetry={() => me.refetch()} />
+        <ErrorState
+          message={
+            me.error instanceof ApiError && me.error.status >= 500
+              ? `Serverda xatolik (${me.error.status}). Backend terminalidagi xatoni tekshiring — ko‘pincha «uv run alembic upgrade head» yordam beradi.`
+              : 'Server bilan aloqa yo‘q. Backend ishga tushganini tekshirib, qayta urinib ko‘ring.'
+          }
+          onRetry={() => me.refetch()}
+        />
       </div>
     )
 

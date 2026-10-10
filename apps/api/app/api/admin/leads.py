@@ -196,7 +196,7 @@ async def get_lead(lead_id: int, user: LeadOperator, session: SessionDep):
 
 
 @router.post("/{lead_id}/take", response_model=LeadDetail)
-async def take_lead(lead_id: int, user: LeadOperator, session: SessionDep):
+async def take_lead(lead_id: int, request: Request, user: LeadOperator, session: SessionDep):
     # SELECT ... FOR UPDATE: admin panel va Telegram bir vaqtda olsa ham faqat bittasi muvaffaqiyatli
     lead = await session.scalar(select(Lead).where(Lead.id == lead_id).with_for_update())
     if not lead:
@@ -208,13 +208,14 @@ async def take_lead(lead_id: int, user: LeadOperator, session: SessionDep):
     lead.taken_by_user_id = user.id
     lead.taken_at = datetime.now(UTC)
     session.add(LeadEvent(lead_id=lead.id, kind="taken", actor=user.name, meta={"via": "admin"}))
+    audit(session, request, user, "lead_take", "lead", lead.id)
     await session.commit()
     await _sync_telegram(lead)
     return await load_detail(session, lead_id)
 
 
 @router.patch("/{lead_id}", response_model=LeadDetail)
-async def patch_lead(lead_id: int, body: LeadPatch, user: LeadOperator, session: SessionDep):
+async def patch_lead(lead_id: int, body: LeadPatch, request: Request, user: LeadOperator, session: SessionDep):
     data = patch_data(body, nullable={"admin_note"})
     lead = await session.scalar(select(Lead).where(Lead.id == lead_id).with_for_update())
     if not lead:
@@ -233,6 +234,7 @@ async def patch_lead(lead_id: int, body: LeadPatch, user: LeadOperator, session:
         session.add(
             LeadEvent(lead_id=lead.id, kind="status", actor=user.name, meta={"status": new_status.value, "from": old.value})
         )
+        audit(session, request, user, "lead_status", "lead", lead.id, {"from": old.value, "to": new_status.value})
         changed = True
 
     if "admin_note" in data:
@@ -240,6 +242,7 @@ async def patch_lead(lead_id: int, body: LeadPatch, user: LeadOperator, session:
         if note != lead.admin_note:
             lead.admin_note = note
             session.add(LeadEvent(lead_id=lead.id, kind="note", actor=user.name, meta={"length": len(note or "")}))
+            audit(session, request, user, "lead_note", "lead", lead.id)
             changed = True
 
     await session.commit()

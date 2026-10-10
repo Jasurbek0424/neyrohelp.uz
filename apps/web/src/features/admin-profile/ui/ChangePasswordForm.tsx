@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
 import { z } from 'zod'
 
+import { strongPassword } from '@/shared/lib/admin/password'
+
 import { adminPaths, changePassword, clearClientState, postAuthMessage } from '@/entities/session'
 import { errorMessage, fieldErrorsFrom, zodErrors } from '@/shared/lib/admin/form-errors'
 import { AdminButton } from '@/shared/ui/admin/Button'
@@ -15,7 +17,7 @@ import { toast } from '@/shared/ui/admin/Toast'
 const schema = z
   .object({
     current: z.string().min(1, 'Joriy parolni kiriting'),
-    next: z.string().min(12, 'Yangi parol kamida 12 belgi').max(256, 'Juda uzun'),
+    next: strongPassword('Yangi parol kamida 12 belgi'),
     confirm: z.string(),
   })
   .refine((v) => v.next === v.confirm, { path: ['confirm'], message: 'Parollar mos kelmadi' })

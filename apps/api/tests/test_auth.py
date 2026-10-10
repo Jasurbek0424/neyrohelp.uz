@@ -26,6 +26,8 @@ async def test_login_success_sets_secure_cookies(client):
         "name": u.name,
         "role": "admin",
         "totp_enabled": True,
+        "telegram_2fa": False,
+        "twofa_available": True,
         "totp_required": False,
     }
     cookies = {c.split("=", 1)[0]: c.lower() for c in res.headers.get_list("set-cookie")}
@@ -113,7 +115,7 @@ async def test_totp_required_flow(client):
     u = await create_user(Role.editor)
     res = await client.post(f"{API}/auth/login", json={"email": u.email, "password": PASSWORD})
     assert res.status_code == 200
-    assert res.json() == {"requires_totp": True}
+    assert res.json() == {"requires_totp": True, "method": "app"}
     assert "set-cookie" not in res.headers
 
     bad = await client.post(f"{API}/auth/login", json={"email": u.email, "password": PASSWORD, "totp": "000000"})

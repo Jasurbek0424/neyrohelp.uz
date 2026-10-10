@@ -7,7 +7,7 @@ from sqlalchemy import func, select
 from app.core.deps import AdminOnly, SessionDep
 from app.core.security import hash_password
 from app.models import User
-from app.schemas.admin import UserIn, UserOut, UserPatch
+from app.schemas.admin import UserIn, UserOut, UserPasswordIn, UserPatch
 from app.services.passwords import password_problem
 
 from ._common import audit, conflict, invalid, not_found, patch_data
@@ -37,6 +37,7 @@ async def create_user(body: UserIn, request: Request, user: AdminOnly, session: 
         password_hash=await run_in_threadpool(hash_password, body.password),
         is_active=True,
         totp_enabled=False,
+        telegram_2fa=False,
         failed_logins=0,
         token_version=0,
     )
@@ -80,6 +81,27 @@ async def patch_user(user_id: int, body: UserPatch, request: Request, user: Admi
     await session.commit()
     await session.refresh(target)
     return UserOut.model_validate(target)
+
+
+@router.post("/{user_id}/password", status_code=status.HTTP_204_NO_CONTENT)
+async def set_user_password(user_id: int, body: UserPasswordIn, request: Request, user: AdminOnly, session: SessionDep):
+    """Administrator xodimga yangi parol beradi (unutgan bo‘lsa). O‘z parolini — Profil sahifasida."""
+    target = await session.get(User, user_id, with_for_update=True)
+    if not target:
+        raise not_found()
+    if target.id == user.id:
+        raise conflict("cannot_modify_self")
+    problem = password_problem(body.password, target.email)
+    if problem:
+        raise invalid("password", problem)
+    target.password_hash = await run_in_threadpool(hash_password, body.password)
+    target.failed_logins = 0
+    target.locked_until = None
+    target.token_version += 1  # eski sessiyalar yopiladi
+    await revoke_user_tokens(session, target.id)
+    audit(session, request, user, "password_reset", "user", target.id)
+    await session.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @router.post("/{user_id}/revoke-sessions", status_code=status.HTTP_204_NO_CONTENT)

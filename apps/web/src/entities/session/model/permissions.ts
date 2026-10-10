@@ -4,7 +4,7 @@ import type { Role } from './types'
  * Rol bo‘yicha bo‘limlar (UI darajasida yashirish; backend baribir `require_role` bilan tekshiradi).
  * admin — hammasi · editor — kontent/blog/sozlamalar (arizalar yo‘q) · operator — dashboard + arizalar.
  */
-export type Section = 'dashboard' | 'leads' | 'doctors' | 'services' | 'posts' | 'settings' | 'users' | 'profile'
+export type Section = 'dashboard' | 'leads' | 'doctors' | 'services' | 'posts' | 'settings' | 'users' | 'audit' | 'profile'
 
 const access: Record<Section, Role[]> = {
   dashboard: ['admin', 'editor', 'operator'],
@@ -14,6 +14,7 @@ const access: Record<Section, Role[]> = {
   posts: ['admin', 'editor'],
   settings: ['admin', 'editor'],
   users: ['admin'],
+  audit: ['admin'],
   profile: ['admin', 'editor', 'operator'],
 }
 
@@ -27,6 +28,7 @@ const prefixes: [string, Section][] = [
   ['/admin/maqolalar', 'posts'],
   ['/admin/sozlamalar', 'settings'],
   ['/admin/xodimlar', 'users'],
+  ['/admin/jurnal', 'audit'],
   ['/admin/profil', 'profile'],
 ]
 
@@ -50,6 +52,7 @@ export const adminPaths = {
   postNew: '/admin/maqolalar/yangi',
   settings: '/admin/sozlamalar',
   users: '/admin/xodimlar',
+  audit: '/admin/jurnal',
   profile: '/admin/profil',
 } as const
 

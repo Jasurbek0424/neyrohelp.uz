@@ -36,12 +36,17 @@ export function LoginForm() {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [formError, setFormError] = useState('')
   const [forgot, setForgot] = useState(false)
+  const [method, setMethod] = useState<'telegram' | 'app'>('app')
+  const [remember, setRemember] = useState(true)
+  const [resent, setResent] = useState('')
   const codeRef = useRef<HTMLInputElement>(null)
 
   const m = useMutation({
     mutationFn: (body: LoginBody) => login(body),
     onSuccess: (res) => {
       if (res.requires_totp) {
+        setMethod(res.method ?? 'app')
+        if (step === 'totp') setResent(res.code_sent ? 'Yangi kod yuborildi.' : 'Kod yaqinda yuborilgan — 30 soniyadan keyin qayta so‘rash mumkin.')
         setStep('totp')
         setFormError('')
         requestAnimationFrame(() => codeRef.current?.focus())
@@ -68,7 +73,7 @@ export function LoginForm() {
     if (!parsed.success) return setErrors(zodErrors(parsed.error.issues))
     setErrors({})
     setFormError('')
-    m.mutate(parsed.data)
+    m.mutate({ ...parsed.data, remember: false })
   }
 
   const submitTotp = (e: FormEvent) => {
@@ -77,7 +82,13 @@ export function LoginForm() {
     if (!parsed.success) return setErrors({ totp: parsed.error.issues[0]?.message ?? '' })
     setErrors({})
     setFormError('')
-    m.mutate({ email: email.trim(), password, totp: parsed.data })
+    m.mutate({ email: email.trim(), password, totp: parsed.data, remember })
+  }
+
+  const resend = () => {
+    setCode('')
+    setFormError('')
+    m.mutate({ email: email.trim(), password, remember: false })
   }
 
   if (step === 'totp') {
@@ -105,10 +116,14 @@ export function LoginForm() {
             <ErrorLine id="lg-form-err">{formError}</ErrorLine>
           ) : (
             <p id="lg-totp-help" className="mt-1.5 text-xs text-ink-2">
-              Authenticator ilovasidagi 6 xonali kodni kiriting.
+              {resent || (method === 'telegram' ? 'Kod Telegram’ga yuborildi. 5 daqiqa amal qiladi.' : 'Authenticator ilovasidagi 6 xonali kodni kiriting.')}
             </p>
           )}
         </div>
+        <label className="-mt-1 flex cursor-pointer items-center gap-2.5 text-[13px] text-ink">
+          <input type="checkbox" className="size-4 accent-navy" checked={remember} onChange={(e) => setRemember(e.target.checked)} />
+          Bu qurilmani 30 kun eslab qolish
+        </label>
         <div>
           <button type="submit" disabled={m.isPending} className="am-btn h-11 w-full cursor-pointer rounded-control border-0 bg-navy text-[15px] font-medium text-white disabled:opacity-60">
             {m.isPending ? 'Tekshirilmoqda…' : 'Tasdiqlash'}
@@ -120,11 +135,17 @@ export function LoginForm() {
               setCode('')
               setPassword('')
               setFormError('')
+              setResent('')
             }}
             className="am-link mt-3 cursor-pointer border-0 bg-transparent p-0 text-[13px] font-medium text-ink"
           >
             Boshqa hisob bilan kirish
           </button>
+          {method === 'telegram' && (
+            <button type="button" onClick={resend} disabled={m.isPending} className="am-link mt-3 ml-4 cursor-pointer border-0 bg-transparent p-0 text-[13px] font-medium text-ink">
+              Kodni qayta yuborish
+            </button>
+          )}
         </div>
       </form>
     )

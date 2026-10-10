@@ -104,6 +104,7 @@ class LoginIn(In):
     email: Annotated[str, StringConstraints(strip_whitespace=True, to_lower=True, max_length=254, min_length=3)]
     password: str = Field(min_length=1, max_length=256)
     totp: Annotated[str, StringConstraints(pattern=r"^\d{6}$")] | None = None
+    remember: bool = False  # "bu qurilmani eslab qol" — 2FA shu brauzerda N kun so‘ralmaydi
 
 
 class Me(Out):
@@ -112,12 +113,17 @@ class Me(Out):
     name: str
     role: Role
     totp_enabled: bool
+    telegram_2fa: bool = False
+    telegram_hint: str | None = Field(None, description="ulangan Telegram ID (maskalangan)")
     totp_required: bool = Field(False, description="admin/editor 2FA o‘rnatmagan — frontend sozlashga yo‘naltiradi")
+    twofa_available: bool = Field(False, description="2FA tizimda yoqilganmi (TWOFA_ENABLED)")
 
 
 class LoginOut(BaseModel):
     user: Me | None = None
     requires_totp: bool | None = None
+    method: Literal["telegram", "app"] | None = None
+    code_sent: bool | None = None
 
 
 class UserEnvelope(BaseModel):
@@ -127,6 +133,10 @@ class UserEnvelope(BaseModel):
 class TotpSetupOut(BaseModel):
     secret: str
     otpauth_uri: str
+
+
+class TelegramLinkIn(In):
+    telegram_id: int = Field(ge=1, le=10**13)
 
 
 class TotpEnableIn(In):
@@ -652,6 +662,10 @@ class UserPatch(In):
     is_active: bool | None = None
 
 
+class UserPasswordIn(In):
+    password: str = Field(min_length=12, max_length=256)
+
+
 class UserOut(Out):
     id: int
     email: str
@@ -659,6 +673,7 @@ class UserOut(Out):
     role: Role
     is_active: bool
     totp_enabled: bool
+    telegram_2fa: bool = False
     last_login_at: datetime | None
     locked_until: datetime | None
     created_at: datetime
@@ -666,7 +681,9 @@ class UserOut(Out):
 
 class AuditOut(BaseModel):
     id: int
+    user_id: int | None = None
     user_name: str | None
+    user_role: Role | None = None
     action: str
     entity: str | None
     entity_id: str | None

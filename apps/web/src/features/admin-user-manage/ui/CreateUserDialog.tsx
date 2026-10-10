@@ -6,16 +6,18 @@ import { z } from 'zod'
 import { useCreateUser } from '@/entities/admin-user'
 import { roleLabels, type Role } from '@/entities/session'
 import { errorMessage, fieldErrorsFrom, zodErrors } from '@/shared/lib/admin/form-errors'
+import { strongPassword } from '@/shared/lib/admin/password'
 import { AdminButton } from '@/shared/ui/admin/Button'
 import { FormDialog } from '@/shared/ui/admin/ConfirmDialog'
 import { Field, Input, Select } from '@/shared/ui/admin/Field'
+import { PasswordField } from '@/shared/ui/admin/PasswordField'
 import { toast } from '@/shared/ui/admin/Toast'
 
 const schema = z.object({
   name: z.string().trim().min(2, 'Ism kamida 2 belgi').max(120, 'Juda uzun'),
   email: z.string().trim().pipe(z.email({ message: 'Email manzili noto‘g‘ri' })),
   role: z.enum(['admin', 'editor', 'operator']),
-  password: z.string().min(12, 'Parol kamida 12 belgi').max(256, 'Juda uzun'),
+  password: strongPassword(),
 })
 
 function CreateUserForm({ onClose }: { onClose: () => void }) {
@@ -31,7 +33,7 @@ function CreateUserForm({ onClose }: { onClose: () => void }) {
     setErrors({})
     create.mutate(parsed.data, {
       onSuccess: () => {
-        toast.success('Xodim qo‘shildi. Parolni unga xavfsiz kanal orqali bering.')
+        toast.success('Xodim qo‘shildi. Login va parolni unga shaxsan bering.')
         onClose()
       },
       onError: (err) => {
@@ -52,7 +54,7 @@ function CreateUserForm({ onClose }: { onClose: () => void }) {
         <Field label="Email" error={errors.email}>
           {({ id, invalid }) => <Input id={id} type="email" autoComplete="off" aria-invalid={invalid || undefined} value={form.email} onChange={(e) => set('email', e.target.value)} />}
         </Field>
-        <Field label="Rol" hint="Operator — faqat arizalar; muharrir — kontent va blog; administrator — hammasi.">
+        <Field label="Rol" hint="Call-operator — faqat arizalar; muharrir — kontent va blog; administrator — hammasi, xodimlarni ham boshqaradi.">
           {({ id, describedBy }) => (
             <Select id={id} aria-describedby={describedBy} value={form.role} onChange={(e) => set('role', e.target.value)}>
               {(['operator', 'editor', 'admin'] as const).map((r) => (
@@ -63,9 +65,7 @@ function CreateUserForm({ onClose }: { onClose: () => void }) {
             </Select>
           )}
         </Field>
-        <Field label="Vaqtinchalik parol" error={errors.password} hint="Kamida 12 belgi. Xodim birinchi kirishda o‘zgartiradi.">
-          {({ id, describedBy, invalid }) => <Input id={id} type="password" autoComplete="new-password" aria-describedby={describedBy} aria-invalid={invalid || undefined} value={form.password} onChange={(e) => set('password', e.target.value)} />}
-        </Field>
+        <PasswordField label="Parol" value={form.password} onChange={(v) => set('password', v)} error={errors.password} />
       </div>
       <div className="flex justify-end gap-2 border-t border-line px-6 py-4">
         <AdminButton onClick={onClose} disabled={create.isPending}>
