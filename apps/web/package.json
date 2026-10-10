@@ -1,0 +1,45 @@
+{
+  "name": "neyromed-web",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "api:types": "openapi-typescript http://127.0.0.1:8100/api/openapi.json -o src/shared/api/schema.d.ts"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "dependencies": {
+    "@fontsource-variable/onest": "^5.3.1",
+    "@fontsource/onest": "^5.3.1",
+    "@tanstack/react-query": "^5.104.1",
+    "markdown-it": "^15.0.2",
+    "markdown-it-container": "^4.0.0",
+    "next": "^16.4.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "server-only": "^0.0.1",
+    "zod": "^4.6.5",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@tanstack/react-query-devtools": "^5.104.1",
+    "@types/markdown-it": "^14.2.0",
+    "@types/markdown-it-container": "^4.0.1",
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.0",
+    "openapi-typescript": "^7.13.0",
+    "postcss": "^8.5.29",
+    "tailwindcss": "^4.3.3",
+    "typescript": "5.9"
+  }
+}

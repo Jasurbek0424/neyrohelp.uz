@@ -1,0 +1,74 @@
+# Farm Bot bilan bitta 4 GB VPS. Hamma portlar faqat 127.0.0.1 da — tashqariga faqat Caddy ochiq.
+name: neyromed
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: neyromed
+      POSTGRES_USER: neyromed
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?}
+    command: ["postgres", "-c", "shared_buffers=128MB", "-c", "max_connections=60", "-c", "work_mem=4MB", "-c", "effective_cache_size=384MB"]
+    volumes: [pgdata:/var/lib/postgresql/data, ./backups:/backups]
+    mem_limit: 512m
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -U neyromed"], interval: 10s, retries: 5 }
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD:?}", "--maxmemory", "64mb", "--maxmemory-policy", "allkeys-lru", "--save", ""]
+    mem_limit: 96m
+
+  api:
+    build: ../apps/api
+    restart: unless-stopped
+    env_file: ./api.env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://neyromed:${POSTGRES_PASSWORD}@postgres:5432/neyromed
+      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379/0
+      WEB_INTERNAL_URL: http://web:3000
+      MEDIA_DIR: /app/media
+    volumes: [media:/app/media]
+    depends_on: { postgres: { condition: service_healthy }, redis: { condition: service_started } }
+    ports: ["127.0.0.1:8100:8100"]
+    mem_limit: 320m
+    read_only: true
+    tmpfs: [/tmp]
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+
+  worker:
+    build: ../apps/api
+    restart: unless-stopped
+    command: ["arq", "app.worker.WorkerSettings"]
+    env_file: ./api.env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://neyromed:${POSTGRES_PASSWORD}@postgres:5432/neyromed
+      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379/0
+      WEB_INTERNAL_URL: http://web:3000
+    depends_on: [api]
+    mem_limit: 160m
+    read_only: true
+    tmpfs: [/tmp]
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+
+  web:
+    build:
+      context: ../apps/web
+      # Build paytida API host tarmog‘ida 127.0.0.1:8100 da ochiq (avval `docker compose up -d api`)
+      args: { NEXT_PUBLIC_SITE_URL: "${SITE_URL:?}", API_INTERNAL_URL: "http://127.0.0.1:8100" }
+      network: host
+    restart: unless-stopped
+    environment:
+      API_INTERNAL_URL: http://api:8100
+      NEXT_PUBLIC_SITE_URL: ${SITE_URL}
+      REVALIDATE_SECRET: ${REVALIDATE_SECRET:?}
+    ports: ["127.0.0.1:3100:3000"]
+    mem_limit: 384m
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+
+volumes:
+  pgdata:
+  media:

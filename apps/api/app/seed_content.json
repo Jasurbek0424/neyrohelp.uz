@@ -1,0 +1,843 @@
+{
+ "clinic": {
+  "title": {
+   "uz": "NeyroMed klinikasi haqida",
+   "ru": "О клинике NeyroMed",
+   "en": "About NeyroMed"
+  },
+  "lead": {
+   "uz": "Klinika asab tizimi kasalliklarini tashxislash va davolashga ixtisoslashgan: qabul, tekshiruv va kuzatuv bir joyda.",
+   "ru": "Клиника специализируется на диагностике и лечении заболеваний нервной системы: приём, обследование и наблюдение в одном месте.",
+   "en": "The clinic specialises in diagnosing and treating nervous system disorders: consultation, tests and follow-up in one place."
+  },
+  "coverCaption": {
+   "uz": "Klinika binosi, Toshkent",
+   "ru": "Здание клиники, Ташкент",
+   "en": "Clinic building, Tashkent"
+  },
+  "approachTitle": {
+   "uz": "Bizning yondashuv",
+   "ru": "Наш подход",
+   "en": "Our approach"
+  },
+  "approach": {
+   "uz": [
+    {
+     "title": "Aniq tashxis",
+     "text": "Davolash tashxisdan boshlanadi. Shifokor shikoyatni batafsil so‘raydi va faqat kerakli tekshiruvlarni tayinlaydi."
+    },
+    {
+     "title": "Tushunarli tushuntirish",
+     "text": "Natijalar va davolash rejasi oddiy tilda tushuntiriladi. Savollaringizga javob olmaguningizcha qabul tugamaydi."
+    },
+    {
+     "title": "Uzluksiz kuzatuv",
+     "text": "Qayta ko‘rik sanasi birinchi qabuldayoq belgilanadi. Holat o‘zgarsa, reja ham o‘zgaradi."
+    }
+   ],
+   "ru": [
+    {
+     "title": "Точный диагноз",
+     "text": "Лечение начинается с диагноза. Врач подробно расспрашивает о жалобах и назначает только нужные обследования."
+    },
+    {
+     "title": "Понятные объяснения",
+     "text": "Результаты и план лечения объясняются простым языком. Приём не заканчивается, пока у вас есть вопросы."
+    },
+    {
+     "title": "Постоянное наблюдение",
+     "text": "Дату повторного приёма назначают уже на первом визите. Если состояние меняется — меняется и план."
+    }
+   ],
+   "en": [
+    {
+     "title": "Accurate diagnosis",
+     "text": "Treatment starts with a diagnosis. The doctor asks about your symptoms in detail and orders only the tests you need."
+    },
+    {
+     "title": "Clear explanations",
+     "text": "Results and the treatment plan are explained in plain language. The visit does not end while you still have questions."
+    },
+    {
+     "title": "Ongoing follow-up",
+     "text": "The follow-up date is set at the first visit. If your condition changes, the plan changes too."
+    }
+   ]
+  },
+  "equipment": [
+   {
+    "name": {
+     "uz": "[Jihoz nomi]",
+     "ru": "[Название]",
+     "en": "[Equipment name]"
+    },
+    "purpose": {
+     "uz": "Miya bioelektrik faolligini qayd etish",
+     "ru": "Регистрация биоэлектрической активности мозга",
+     "en": "Recording the brain’s electrical activity"
+    }
+   },
+   {
+    "name": {
+     "uz": "[Jihoz nomi]",
+     "ru": "[Название]",
+     "en": "[Equipment name]"
+    },
+    "purpose": {
+     "uz": "Periferik nervlar va mushaklar faoliyatini tekshirish",
+     "ru": "Исследование периферических нервов и мышц",
+     "en": "Testing peripheral nerves and muscles"
+    }
+   },
+   {
+    "name": {
+     "uz": "[Jihoz nomi]",
+     "ru": "[Название]",
+     "en": "[Equipment name]"
+    },
+    "purpose": {
+     "uz": "Bosh va bo‘yin tomirlarida qon oqimini baholash",
+     "ru": "Оценка кровотока в сосудах головы и шеи",
+     "en": "Assessing blood flow in head and neck vessels"
+    }
+   }
+  ],
+  "documents": [
+   {
+    "title": {
+     "uz": "Tibbiy faoliyat litsenziyasi",
+     "ru": "Лицензия на медицинскую деятельность",
+     "en": "Medical licence"
+    },
+    "number": "№ [—] · [sana]"
+   },
+   {
+    "title": {
+     "uz": "Davlat ro‘yxatidan o‘tganlik guvohnomasi",
+     "ru": "Свидетельство о государственной регистрации",
+     "en": "State registration certificate"
+    },
+    "number": "№ [—] · [sana]"
+   },
+   {
+    "title": {
+     "uz": "Sanitariya-epidemiologiya xulosasi",
+     "ru": "Санитарно-эпидемиологическое заключение",
+     "en": "Sanitary and epidemiological certificate"
+    },
+    "number": "№ [—] · [sana]"
+   }
+  ]
+ },
+ "home": {
+  "heroEyebrow": {
+   "uz": "Nevrologiya markazi · Toshkent",
+   "ru": "Неврологический центр · Ташкент",
+   "en": "Neurology centre · Tashkent"
+  },
+  "heroTitle": {
+   "uz": "Asab tizimi kasalliklarini aniq tashxislash va davolash",
+   "ru": "Точная диагностика и лечение заболеваний нервной системы",
+   "en": "Accurate diagnosis and treatment of nervous system disorders"
+  },
+  "heroLead": {
+   "uz": "Tajribali nevrologlar, zamonaviy diagnostika va har bir bemor uchun tushunarli davolash rejasi.",
+   "ru": "Опытные неврологи, современная диагностика и понятный план лечения для каждого пациента.",
+   "en": "Experienced neurologists, modern diagnostics and a clear treatment plan for every patient."
+  },
+  "clinicTitle": {
+   "uz": "Qabul, tekshiruv va davolash — bitta binoda",
+   "ru": "Приём, обследование и лечение — в одном здании",
+   "en": "Consultation, tests and treatment — under one roof"
+  },
+  "clinicText": {
+   "uz": "Tinch muhit, tushunarli yo‘riqnoma va har bir bosqichda siz bilan ishlaydigan jamoa.",
+   "ru": "Спокойная обстановка, понятные инструкции и команда, которая ведёт вас на каждом этапе.",
+   "en": "A calm setting, clear guidance and a team that stays with you at every step."
+  },
+  "clinicPoints": {
+   "uz": [
+    "Qabul va tekshiruvlar bitta binoda",
+    "Natijalarni shifokor tushuntirib beradi",
+    "Qayta ko‘rik va kuzatuv rejasi"
+   ],
+   "ru": [
+    "Приём и обследования в одном здании",
+    "Врач объясняет результаты",
+    "План повторного приёма и наблюдения"
+   ],
+   "en": [
+    "Consultations and tests in one building",
+    "The doctor explains your results",
+    "A follow-up and monitoring plan"
+   ]
+  },
+  "faq": {
+   "uz": [
+    {
+     "question": "Qabulga qanday yozilaman?",
+     "answer": "Saytdagi formani to‘ldiring yoki qo‘ng‘iroq qiling. Administrator ish vaqtida siz bilan bog‘lanib, qulay kun va soatni kelishadi."
+    },
+    {
+     "question": "Birinchi qabulga nimalarni olib kelay?",
+     "answer": "Avvalgi tekshiruv natijalari, hozir qabul qilayotgan dorilaringiz ro‘yxati va shaxsni tasdiqlovchi hujjat."
+    },
+    {
+     "question": "Tekshiruv natijalari qachon tayyor bo‘ladi?",
+     "answer": "Muddat tekshiruv turiga bog‘liq. Aniq vaqtni shifokor qabul paytida aytadi."
+    },
+    {
+     "question": "Narxlarni qayerdan bilsam bo‘ladi?",
+     "answer": "Asosiy narxlar «Yo‘nalishlar» sahifasida. Aniq summani administrator qo‘ng‘iroq paytida aytadi."
+    },
+    {
+     "question": "Ma’lumotlarim qanday saqlanadi?",
+     "answer": "Arizadagi ma’lumotlar faqat klinika administratorlariga ko‘rinadi va siz bilan bog‘lanish uchun ishlatiladi."
+    }
+   ],
+   "ru": [
+    {
+     "question": "Как записаться на приём?",
+     "answer": "Заполните форму на сайте или позвоните. Администратор свяжется с вами в рабочее время и согласует удобный день и час."
+    },
+    {
+     "question": "Что взять на первый приём?",
+     "answer": "Результаты прошлых обследований, список принимаемых лекарств и документ, удостоверяющий личность."
+    },
+    {
+     "question": "Когда будут готовы результаты?",
+     "answer": "Срок зависит от вида обследования. Точное время врач назовёт на приёме."
+    },
+    {
+     "question": "Где узнать цены?",
+     "answer": "Основные цены — на странице «Направления». Точную сумму администратор назовёт по телефону."
+    },
+    {
+     "question": "Как хранятся мои данные?",
+     "answer": "Данные из заявки видят только администраторы клиники, они используются только для связи с вами."
+    }
+   ],
+   "en": [
+    {
+     "question": "How do I book an appointment?",
+     "answer": "Fill in the form on the website or call us. The administrator will contact you during opening hours to agree on a convenient day and time."
+    },
+    {
+     "question": "What should I bring to my first visit?",
+     "answer": "Results of previous tests, a list of medicines you are taking and an ID document."
+    },
+    {
+     "question": "When will my results be ready?",
+     "answer": "It depends on the type of test. The doctor will tell you the exact time during the visit."
+    },
+    {
+     "question": "Where can I find prices?",
+     "answer": "Main prices are on the Services page. The administrator will confirm the exact amount by phone."
+    },
+    {
+     "question": "How is my data stored?",
+     "answer": "Only clinic administrators can see the data from your request, and it is used only to contact you."
+    }
+   ]
+  }
+ },
+ "postCategories": [
+  {
+   "slug": "nevrologiya",
+   "title": {
+    "uz": "Nevrologiya",
+    "ru": "Неврология",
+    "en": "Neurology"
+   }
+  },
+  {
+   "slug": "uyqu",
+   "title": {
+    "uz": "Uyqu",
+    "ru": "Сон",
+    "en": "Sleep"
+   }
+  },
+  {
+   "slug": "diagnostika",
+   "title": {
+    "uz": "Diagnostika",
+    "ru": "Диагностика",
+    "en": "Diagnostics"
+   }
+  },
+  {
+   "slug": "bolalar",
+   "title": {
+    "uz": "Bolalar",
+    "ru": "Дети",
+    "en": "Children"
+   }
+  },
+  {
+   "slug": "reabilitatsiya",
+   "title": {
+    "uz": "Reabilitatsiya",
+    "ru": "Реабилитация",
+    "en": "Rehabilitation"
+   }
+  }
+ ],
+ "posts": [
+  {
+   "slug": "bosh-ogrigi-qachon-shifokorga-borish-kerak",
+   "category": "nevrologiya",
+   "minutes": 5,
+   "daysAgo": 17,
+   "featured": true,
+   "title": "Bosh og‘rig‘i: qachon shifokorga murojaat qilish kerak",
+   "excerpt": "Ko‘pchilik bosh og‘rig‘i xavfsiz va o‘tib ketadi. Lekin ba’zi belgilar zudlik bilan ko‘rikni talab qiladi — ularni bilish muhim.",
+   "body": "Bosh og‘rig‘i — nevrologga murojaat qilishning eng keng tarqalgan sabablaridan biri. Ko‘p hollarda u zo‘riqish, uyqu yetishmasligi, ovqatni o‘tkazib yuborish yoki kam suv ichish bilan bog‘liq bo‘ladi va dam olgandan keyin o‘tib ketadi.\n\nBiroq bosh og‘rig‘i ba’zan jiddiyroq holatning belgisi bo‘lishi mumkin. Quyida qaysi holatlarda kutib turish mumkin, qaysilarida esa shifokorga murojaat qilish kerakligini tushuntiramiz.\n\n## Bosh og‘rig‘ining keng tarqalgan turlari\n\nAksariyat bosh og‘riqlari «birlamchi» hisoblanadi — ya’ni boshqa kasallik oqibati emas, o‘zi alohida holat.\n\n- **Kuchlanish tipidagi og‘riq** — boshni «qisib turgandek» bir tekis og‘riq, ko‘pincha charchoq va stress bilan bog‘liq.\n- **Migren** — ko‘pincha bir tomonlama, pulsatsiyalanuvchi og‘riq; ko‘ngil aynishi, yorug‘lik va tovushga sezuvchanlik bilan kechishi mumkin.\n- **Klaster bosh og‘rig‘i** — ko‘z atrofida juda kuchli, qisqa xurujlar; kamdan-kam uchraydi, lekin juda og‘ir o‘tadi.\n\n:::callout\n\n## Qachon rejali ravishda nevrologga borish kerak\n\nAgar holat zudlik bilan yordamni talab qilmasa-da, bosh og‘rig‘i hayot sifatiga ta’sir qilayotgan bo‘lsa, nevrolog bilan maslahatlashing:\n\n- og‘riq oyiga bir necha marta takrorlanadi;\n- odatiy og‘riq qoldiruvchilar yordam bermay qoldi yoki ularni tez-tez ichishga to‘g‘ri kelyapti;\n- og‘riqning xarakteri, kuchi yoki joyi o‘zgardi;\n- bosh og‘rig‘i 50 yoshdan keyin birinchi marta paydo bo‘ldi.\n\n## Qabulga qanday tayyorlanish\n\nQabuldan oldin 2–3 hafta davomida og‘riq kundaligini yuriting: og‘riq qachon boshlandi, qancha davom etdi, qanchalik kuchli bo‘ldi va nima yordam berdi. Qabul qilayotgan barcha dorilaringiz ro‘yxatini, shu jumladan og‘riq qoldiruvchilarni ham olib keling.\n\nBu ma’lumotlar shifokorga og‘riq turini aniqlash va keraksiz tekshiruvlarsiz to‘g‘ri davolashni tanlashga yordam beradi.",
+   "callout": {
+    "title": "Zudlik bilan 103 ga qo‘ng‘iroq qiling, agar:",
+    "items": [
+     "og‘riq to‘satdan boshlangan va hayotingizdagi eng kuchli og‘riq bo‘lsa;",
+     "og‘riq yuqori harorat va ensa mushaklarining qotishi bilan kechsa;",
+     "og‘riq bosh jarohatidan keyin paydo bo‘lgan bo‘lsa;",
+     "yuz yoki qo‘l-oyoqda kuchsizlik, nutq buzilishi yoki ko‘rish yo‘qolishi bo‘lsa."
+    ]
+   }
+  },
+  {
+   "slug": "soglom-uyqu-uchun-beshta-oddiy-odat",
+   "category": "uyqu",
+   "minutes": 4,
+   "daysAgo": 24,
+   "title": "Sog‘lom uyqu uchun beshta oddiy odat",
+   "excerpt": "Uyqu rejimi asab tizimiga qanday ta’sir qiladi va uni dori-darmonsiz qanday tiklash mumkin.",
+   "body": "Uyqu paytida miya kun davomida olingan ma’lumotni qayta ishlaydi va tiklanadi. Uzoq muddatli uyqu yetishmasligi diqqat, kayfiyat va bosh og‘rig‘iga ta’sir qiladi.\n\n## Beshta oddiy odat\n\n1. **Bir vaqtda yoting va turing** — dam olish kunlari ham. Barqaror rejim ichki soatni tartibga soladi.\n2. **Yotishdan bir soat oldin ekranlarni chetga qo‘ying.** Telefon va planshet yorug‘ligi uyquni kechiktirishi mumkin.\n3. **Kechqurun kofein va og‘ir ovqatdan saqlaning.** Kofein tanada bir necha soat saqlanadi.\n4. **Xonani salqin, qorong‘i va tinch saqlang.**\n5. **Karavotni faqat uyqu uchun ishlating.** 20 daqiqada uxlay olmasangiz, turing va tinch mashg‘ulot bilan band bo‘ling.\n\n## Qachon shifokorga murojaat qilish kerak\n\nAgar uyqusizlik bir oydan ortiq davom etsa, kunduzi uyquchanlik ishingizga xalal bersa yoki yaqinlaringiz uyqu paytida nafas to‘xtab qolishini sezsa — nevrolog bilan maslahatlashing."
+  },
+  {
+   "slug": "tekshiruvga-qanday-tayyorlanish-kerak",
+   "category": "diagnostika",
+   "minutes": 6,
+   "daysAgo": 31,
+   "title": "Tekshiruvga qanday tayyorlanish kerak",
+   "excerpt": "Qabulga nimalarni olib kelish va shifokorga qanday savollar berish kerak — qisqa yo‘riqnoma.",
+   "body": "To‘g‘ri tayyorgarlik qabulni samaraliroq qiladi va keraksiz takroriy tekshiruvlardan saqlaydi.\n\n## Nimalarni olib kelish kerak\n\n- avvalgi tekshiruvlar natijalari va xulosalari;\n- hozir qabul qilayotgan dorilaringiz ro‘yxati (dozasi bilan);\n- shaxsni tasdiqlovchi hujjat.\n\n## Shikoyatingizni oldindan yozib oling\n\nBelgilar qachon boshlangan, qanchalik tez-tez takrorlanadi va nima yengillik beradi — buni qog‘ozga yozib olsangiz, qabul paytida muhim tafsilot esdan chiqmaydi.\n\n## Shifokorga beriladigan savollar\n\n- Tashxisni tasdiqlash uchun qanday tekshiruvlar kerak?\n- Davolash qancha davom etadi va qachon yaxshilanish kutiladi?\n- Qaysi belgilar paydo bo‘lsa, qayta murojaat qilishim kerak?\n\nAniq tekshiruvlarga maxsus tayyorgarlik kerak bo‘lsa, administrator buni qo‘ng‘iroq paytida oldindan aytadi."
+  },
+  {
+   "slug": "migren-va-oddiy-bosh-ogrigining-farqi",
+   "category": "nevrologiya",
+   "minutes": 5,
+   "daysAgo": 45,
+   "title": "Migren va oddiy bosh og‘rig‘ining farqi",
+   "excerpt": "Migren — shunchaki kuchli bosh og‘rig‘i emas. Uni qanday tanish mumkinligi va nima uchun bu muhimligi.",
+   "body": "Migren — bosh og‘rig‘i xurujlari bilan kechadigan alohida nevrologik holat. U ko‘pincha oddiy bosh og‘rig‘i bilan adashtiriladi.\n\n## Migrenga xos belgilar\n\n- og‘riq ko‘pincha boshning bir tomonida bo‘ladi va pulsatsiyalanadi;\n- jismoniy harakat bilan kuchayadi;\n- ko‘ngil aynishi, yorug‘lik yoki tovushdan bezovtalik bilan kechishi mumkin;\n- ba’zi odamlarda xurujdan oldin ko‘rishda chaqnashlar («aura») paydo bo‘ladi.\n\n## Nima uchun farqlash muhim\n\nMigrenni davolash yondashuvi boshqa bosh og‘riqlaridan farq qiladi. To‘g‘ri tashxis xurujlarni kamaytirish va og‘riq qoldiruvchilarni haddan tashqari ko‘p ichishning oldini olishga yordam beradi.\n\nTashxisni faqat shifokor qo‘yadi — og‘riq kundaligi bu jarayonni sezilarli tezlashtiradi."
+  },
+  {
+   "slug": "bolada-diqqat-yetishmasligi",
+   "category": "bolalar",
+   "minutes": 5,
+   "daysAgo": 58,
+   "title": "Bolada diqqat yetishmasligi: qachon mutaxassisga borish kerak",
+   "excerpt": "Har qanday faol bola ham muammoga ega emas. Qaysi belgilar mutaxassis bilan maslahatlashishga asos bo‘ladi.",
+   "body": "Bolalarning diqqati kattalarnikidan qisqa bo‘ladi va bu tabiiy. Lekin ba’zi hollarda diqqat bilan bog‘liq qiyinchiliklar o‘qish va do‘stlar bilan munosabatga xalal beradi.\n\n## E’tibor berish kerak bo‘lgan belgilar\n\n- vazifani oxiriga yetkazish doimiy ravishda qiyin;\n- bir necha muhitda — uyda ham, maktabda ham — bir xil qiyinchiliklar kuzatiladi;\n- belgilar olti oydan ortiq davom etmoqda.\n\n## Qabulda nima bo‘ladi\n\nBolalar nevrologi ota-onalar bilan suhbatlashadi, bolani ko‘rikdan o‘tkazadi va kerak bo‘lsa qo‘shimcha tekshiruvlarni tayinlaydi. O‘qituvchining fikri ham foydali bo‘lishi mumkin — iloji bo‘lsa, uni yozma ravishda olib keling."
+  },
+  {
+   "slug": "insultdan-keyin-tiklanish",
+   "category": "reabilitatsiya",
+   "minutes": 6,
+   "daysAgo": 72,
+   "title": "Insultdan keyin tiklanish: birinchi oylar",
+   "excerpt": "Reabilitatsiya qachon boshlanadi, oila qanday yordam bera oladi va nimalarga tayyor turish kerak.",
+   "body": "Insultdan keyingi dastlabki oylar tiklanish uchun ayniqsa muhim davr hisoblanadi. Reabilitatsiya odatda shifokor ruxsati bilan imkon qadar erta boshlanadi.\n\n## Reabilitatsiya nimalarni o‘z ichiga oladi\n\n- harakat va muvozanatni tiklash mashg‘ulotlari;\n- kundalik ko‘nikmalar — ovqatlanish, kiyinish, yurish;\n- kerak bo‘lsa, nutq va yutish bo‘yicha mashg‘ulotlar.\n\n## Oila qanday yordam beradi\n\nYaqinlarning qo‘llab-quvvatlashi va mashqlarni uyda davom ettirish tiklanishga katta ta’sir qiladi. Reabilitolog oilaga uyda bajariladigan mashqlarni o‘rgatadi.\n\nTiklanish sur’ati har bir odamda turlicha — maqsadlar shifokor bilan birgalikda bosqichma-bosqich belgilanadi."
+  },
+  {
+   "slug": "qol-oyoq-uvishishi",
+   "category": "nevrologiya",
+   "minutes": 4,
+   "daysAgo": 88,
+   "title": "Qo‘l-oyoq uvishishi nimadan dalolat beradi",
+   "excerpt": "Uzoq bir holatda o‘tirishdan tortib nerv shikastlanishigacha — uvishishning sabablari va ko‘rik kerak bo‘lgan holatlar.",
+   "body": "Qo‘l yoki oyoq uvishishi ko‘pincha noqulay holatda uzoq o‘tirish yoki yotish bilan bog‘liq va bir necha daqiqada o‘tadi.\n\n## Qachon e’tibor berish kerak\n\n- uvishish tez-tez takrorlanadi yoki doimiy bo‘lib qoldi;\n- og‘riq, achishish yoki kuchsizlik bilan birga kechmoqda;\n- ikki tomonda simmetrik tarzda paydo bo‘lmoqda.\n\nBunday hollarda nevrolog nervlar faoliyatini tekshirish uchun tekshiruv tayinlashi mumkin.\n\n:::callout",
+   "callout": {
+    "title": "Zudlik bilan 103 ga qo‘ng‘iroq qiling, agar:",
+    "items": [
+     "uvishish to‘satdan, bir tomonda paydo bo‘lsa;",
+     "yuz qiyshayishi, nutq buzilishi yoki kuchsizlik bilan birga kechsa."
+    ]
+   }
+  }
+ ],
+ "serviceCategories": [
+  {
+   "slug": "nevrologiya",
+   "title": {
+    "uz": "Nevrologiya",
+    "ru": "Неврология",
+    "en": "Neurology"
+   },
+   "summary": {
+    "uz": "Bosh og‘rig‘i, bosh aylanishi, uyqusizlik, qo‘l-oyoq uvishishi",
+    "ru": "Головная боль, головокружение, бессонница, онемение рук и ног",
+    "en": "Headache, dizziness, insomnia, numbness in hands and feet"
+   },
+   "description": {
+    "uz": "Kattalar uchun nevrolog qabuli va konsultatsiyalar.",
+    "ru": "Приём невролога и консультации для взрослых.",
+    "en": "Neurologist consultations for adults."
+   },
+   "services": [
+    {
+     "title": {
+      "uz": "Nevrolog birlamchi qabuli",
+      "ru": "Первичный приём невролога",
+      "en": "Initial neurologist consultation"
+     },
+     "note": {
+      "uz": "Ko‘rik, shikoyatlar tahlili, tekshiruv rejasi",
+      "ru": "Осмотр, анализ жалоб, план обследования",
+      "en": "Examination, symptom review, test plan"
+     },
+     "duration": 40
+    },
+    {
+     "title": {
+      "uz": "Nevrolog qayta qabuli",
+      "ru": "Повторный приём невролога",
+      "en": "Follow-up neurologist visit"
+     },
+     "note": {
+      "uz": "Natijalarni ko‘rib chiqish va davolashni tuzatish",
+      "ru": "Разбор результатов и коррекция лечения",
+      "en": "Review of results and treatment adjustment"
+     },
+     "duration": 30
+    },
+    {
+     "title": {
+      "uz": "Bosh og‘rig‘i bo‘yicha konsultatsiya",
+      "ru": "Консультация при головной боли",
+      "en": "Headache consultation"
+     },
+     "note": {
+      "uz": "Migren va boshqa turlarini farqlash",
+      "ru": "Дифференциация мигрени и других видов",
+      "en": "Telling migraine apart from other types"
+     },
+     "duration": 40
+    },
+    {
+     "title": {
+      "uz": "Bosh aylanishi bo‘yicha konsultatsiya",
+      "ru": "Консультация при головокружении",
+      "en": "Dizziness consultation"
+     },
+     "note": {
+      "uz": "Sababini aniqlash uchun tekshiruvlar",
+      "ru": "Обследования для выяснения причины",
+      "en": "Tests to find the cause"
+     },
+     "duration": 40
+    }
+   ]
+  },
+  {
+   "slug": "diagnostika",
+   "title": {
+    "uz": "Diagnostika",
+    "ru": "Диагностика",
+    "en": "Diagnostics"
+   },
+   "summary": {
+    "uz": "Miya va nerv tizimi faoliyatini tekshirish, natijani shifokor tushuntiradi",
+    "ru": "Исследование работы мозга и нервной системы, результат объясняет врач",
+    "en": "Tests of brain and nerve function, explained by a doctor"
+   },
+   "description": {
+    "uz": "Tekshiruvlar shifokor yo‘llanmasi bilan yoki mustaqil o‘tkaziladi.",
+    "ru": "Обследования по направлению врача или самостоятельно.",
+    "en": "Tests with a doctor’s referral or on your own."
+   },
+   "services": [
+    {
+     "title": {
+      "uz": "Elektroensefalografiya (EEG)",
+      "ru": "Электроэнцефалография (ЭЭГ)",
+      "en": "Electroencephalography (EEG)"
+     },
+     "note": {
+      "uz": "Miya bioelektrik faolligi",
+      "ru": "Биоэлектрическая активность мозга",
+      "en": "Electrical activity of the brain"
+     },
+     "duration": 40
+    },
+    {
+     "title": {
+      "uz": "Elektroneyromiografiya (ENMG)",
+      "ru": "Электронейромиография (ЭНМГ)",
+      "en": "Electroneuromyography (ENMG)"
+     },
+     "note": {
+      "uz": "Periferik nervlar va mushaklar",
+      "ru": "Периферические нервы и мышцы",
+      "en": "Peripheral nerves and muscles"
+     },
+     "duration": 45
+    },
+    {
+     "title": {
+      "uz": "Bosh va bo‘yin tomirlari doppleri",
+      "ru": "Допплер сосудов головы и шеи",
+      "en": "Doppler of head and neck vessels"
+     },
+     "note": {
+      "uz": "Qon oqimini baholash",
+      "ru": "Оценка кровотока",
+      "en": "Blood flow assessment"
+     },
+     "duration": 30
+    }
+   ]
+  },
+  {
+   "slug": "bolalar-nevrologiyasi",
+   "title": {
+    "uz": "Bolalar nevrologiyasi",
+    "ru": "Детская неврология",
+    "en": "Paediatric neurology"
+   },
+   "summary": {
+    "uz": "Rivojlanish, diqqat va uyqu bilan bog‘liq muammolar",
+    "ru": "Проблемы развития, внимания и сна",
+    "en": "Development, attention and sleep problems"
+   },
+   "description": {
+    "uz": "Chaqaloqlik davridan o‘smirlikkacha.",
+    "ru": "От младенчества до подросткового возраста.",
+    "en": "From infancy to adolescence."
+   },
+   "services": [
+    {
+     "title": {
+      "uz": "Bolalar nevrologi qabuli",
+      "ru": "Приём детского невролога",
+      "en": "Paediatric neurologist consultation"
+     },
+     "note": {
+      "uz": "Ota-onalardan biri ishtirokida",
+      "ru": "В присутствии одного из родителей",
+      "en": "With a parent present"
+     },
+     "duration": 40
+    },
+    {
+     "title": {
+      "uz": "Rivojlanishni baholash",
+      "ru": "Оценка развития",
+      "en": "Developmental assessment"
+     },
+     "note": {
+      "uz": "Yoshga mos ko‘nikmalar tahlili",
+      "ru": "Анализ навыков по возрасту",
+      "en": "Age-appropriate skills review"
+     },
+     "duration": 60
+    }
+   ]
+  },
+  {
+   "slug": "uyqu-buzilishlari",
+   "title": {
+    "uz": "Uyqu buzilishlari",
+    "ru": "Нарушения сна",
+    "en": "Sleep disorders"
+   },
+   "summary": {
+    "uz": "Uyqusizlik, tez-tez uyg‘onish va kunduzgi holsizlik sabablari",
+    "ru": "Бессонница, частые пробуждения и дневная сонливость",
+    "en": "Insomnia, frequent waking and daytime fatigue"
+   },
+   "description": {
+    "uz": "Uyqu sifatini tiklash uchun sabablarni aniqlash.",
+    "ru": "Поиск причин, чтобы восстановить качество сна.",
+    "en": "Finding the causes to restore sleep quality."
+   },
+   "services": [
+    {
+     "title": {
+      "uz": "Uyqu bo‘yicha konsultatsiya",
+      "ru": "Консультация по сну",
+      "en": "Sleep consultation"
+     },
+     "note": {
+      "uz": "Shikoyatlar va odatlar tahlili",
+      "ru": "Анализ жалоб и привычек",
+      "en": "Review of symptoms and habits"
+     },
+     "duration": 40
+    },
+    {
+     "title": {
+      "uz": "Uyqu kundaligi tahlili",
+      "ru": "Разбор дневника сна",
+      "en": "Sleep diary review"
+     },
+     "note": {
+      "uz": "2 haftalik kundalik asosida",
+      "ru": "По дневнику за 2 недели",
+      "en": "Based on a two-week diary"
+     },
+     "duration": 30
+    }
+   ]
+  },
+  {
+   "slug": "reabilitatsiya",
+   "title": {
+    "uz": "Reabilitatsiya",
+    "ru": "Реабилитация",
+    "en": "Rehabilitation"
+   },
+   "summary": {
+    "uz": "Insult va jarohatlardan keyin bosqichma-bosqich tiklanish",
+    "ru": "Поэтапное восстановление после инсульта и травм",
+    "en": "Step-by-step recovery after stroke and injury"
+   },
+   "description": {
+    "uz": "Individual dastur va natijalarni kuzatish.",
+    "ru": "Индивидуальная программа и контроль результатов.",
+    "en": "An individual programme with progress tracking."
+   },
+   "services": [
+    {
+     "title": {
+      "uz": "Reabilitolog konsultatsiyasi",
+      "ru": "Консультация реабилитолога",
+      "en": "Rehabilitation consultation"
+     },
+     "note": {
+      "uz": "Holatni baholash va maqsadlar",
+      "ru": "Оценка состояния и цели",
+      "en": "Assessment and goals"
+     },
+     "duration": 40
+    },
+    {
+     "title": {
+      "uz": "Individual tiklanish dasturi",
+      "ru": "Индивидуальная программа восстановления",
+      "en": "Individual recovery programme"
+     },
+     "note": {
+      "uz": "Kurs, mashg‘ulotlar soni shifokor bilan kelishiladi",
+      "ru": "Курс, число занятий согласуется с врачом",
+      "en": "A course; number of sessions agreed with the doctor"
+     },
+     "duration": null
+    }
+   ]
+  }
+ ],
+ "settings": {
+  "phone": "+998000000000",
+  "phoneDisplay": "+998 [telefon]",
+  "telegram": "neyromed",
+  "licenseNumber": "[—]",
+  "address": {
+   "uz": "Toshkent, [manzil]",
+   "ru": "Ташкент, [адрес]",
+   "en": "Tashkent, [address]"
+  },
+  "landmark": {
+   "uz": "[mo‘ljal]",
+   "ru": "[ориентир]",
+   "en": "[landmark]"
+  },
+  "hoursShort": {
+   "uz": "Du–Sha · [09:00–18:00]",
+   "ru": "Пн–Сб · [09:00–18:00]",
+   "en": "Mon–Sat · [09:00–18:00]"
+  },
+  "responseTime": {
+   "uz": "15 daqiqa",
+   "ru": "15 минут",
+   "en": "15 minutes"
+  },
+  "hours": {
+   "uz": [
+    {
+     "days": "Dushanba–Juma",
+     "time": "[09:00–18:00]"
+    },
+    {
+     "days": "Shanba",
+     "time": "[09:00–15:00]"
+    },
+    {
+     "days": "Yakshanba",
+     "time": "Dam olish"
+    }
+   ],
+   "ru": [
+    {
+     "days": "Понедельник–пятница",
+     "time": "[09:00–18:00]"
+    },
+    {
+     "days": "Суббота",
+     "time": "[09:00–15:00]"
+    },
+    {
+     "days": "Воскресенье",
+     "time": "Выходной"
+    }
+   ],
+   "en": [
+    {
+     "days": "Monday–Friday",
+     "time": "[09:00–18:00]"
+    },
+    {
+     "days": "Saturday",
+     "time": "[09:00–15:00]"
+    },
+    {
+     "days": "Sunday",
+     "time": "Closed"
+    }
+   ]
+  },
+  "stats": {
+   "uz": [
+    {
+     "value": "[15+]",
+     "label": "yillik klinik tajriba"
+    },
+    {
+     "value": "[12]",
+     "label": "mutaxassis shifokor"
+    },
+    {
+     "value": "[20 000+]",
+     "label": "qabul qilingan bemor"
+    },
+    {
+     "value": "№ [—]",
+     "label": "tibbiy litsenziya"
+    }
+   ],
+   "ru": [
+    {
+     "value": "[15+]",
+     "label": "лет клинического опыта"
+    },
+    {
+     "value": "[12]",
+     "label": "врачей-специалистов"
+    },
+    {
+     "value": "[20 000+]",
+     "label": "принятых пациентов"
+    },
+    {
+     "value": "№ [—]",
+     "label": "медицинская лицензия"
+    }
+   ],
+   "en": [
+    {
+     "value": "[15+]",
+     "label": "years of clinical experience"
+    },
+    {
+     "value": "[12]",
+     "label": "specialist doctors"
+    },
+    {
+     "value": "[20,000+]",
+     "label": "patients seen"
+    },
+    {
+     "value": "No. [—]",
+     "label": "medical licence"
+    }
+   ]
+  },
+  "directions": {
+   "uz": [
+    {
+     "kind": "metro",
+     "text": "[Eng yaqin bekat], [N] daqiqa piyoda"
+    },
+    {
+     "kind": "bus",
+     "text": "[Avtobus yo‘nalishlari]"
+    },
+    {
+     "kind": "car",
+     "text": "Klinika oldida [avtoturargoh]"
+    }
+   ],
+   "ru": [
+    {
+     "kind": "metro",
+     "text": "[Ближайшая станция], [N] минут пешком"
+    },
+    {
+     "kind": "bus",
+     "text": "[Маршруты автобусов]"
+    },
+    {
+     "kind": "car",
+     "text": "У клиники [парковка]"
+    }
+   ],
+   "en": [
+    {
+     "kind": "metro",
+     "text": "[Nearest station], [N] min walk"
+    },
+    {
+     "kind": "bus",
+     "text": "[Bus routes]"
+    },
+    {
+     "kind": "car",
+     "text": "[Parking] in front of the clinic"
+    }
+   ]
+  }
+ },
+ "specialties": [
+  {
+   "slug": "nevrolog",
+   "title": {
+    "uz": "Nevrolog",
+    "ru": "Невролог",
+    "en": "Neurologist"
+   }
+  },
+  {
+   "slug": "neyrofiziolog",
+   "title": {
+    "uz": "Neyrofiziolog",
+    "ru": "Нейрофизиолог",
+    "en": "Neurophysiologist"
+   }
+  },
+  {
+   "slug": "bolalar-nevrologi",
+   "title": {
+    "uz": "Bolalar nevrologi",
+    "ru": "Детский невролог",
+    "en": "Paediatric neurologist"
+   }
+  },
+  {
+   "slug": "reabilitolog",
+   "title": {
+    "uz": "Reabilitolog",
+    "ru": "Реабилитолог",
+    "en": "Rehabilitation specialist"
+   }
+  }
+ ]
+}

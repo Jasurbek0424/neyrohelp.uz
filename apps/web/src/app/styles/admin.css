@@ -1,0 +1,147 @@
+/*
+ * Admin panel tokenlari (ADMIN-SPEC.md). globals.css'dagi umumiy tokenlarga qo‘shimcha.
+ * Komponentlarda Tailwind v4 sintaksisi bilan: bg-(--am-bg), text-(--am-ok) ...
+ */
+:root {
+  --am-bg: #f6f5f2;
+  --am-grid: #f0eeea;
+  --am-side-ink: #3a3f46;
+  --am-muted: #8b9099;
+  --am-ok: #1e6b43;
+  --am-ok-soft: #e6f2ec;
+  --am-warn: #8a5a00;
+  --am-warn-soft: #fdf3e1;
+  --am-warn-dot: #c98a00;
+  --am-neutral-soft: #efeeeb;
+  --am-dirty-row: #fffbf0;
+  --am-chart: #2a78d6;
+  --am-chart-dim: #a9c6ee;
+  --am-chart-rest-dim: #e3e1dc;
+  --am-seo-link: #1a5bbf;
+  --am-shadow: 0 8px 24px rgba(18, 20, 23, 0.08);
+}
+
+.admin-root {
+  background: var(--am-bg);
+  color: #121417;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: normal;
+}
+.admin-root a:focus-visible,
+.admin-root button:focus-visible,
+.admin-root [tabindex]:focus-visible {
+  outline: 2px solid var(--color-coral);
+  outline-offset: 2px;
+}
+/* Kiritish maydonlari: navy fokus (dizayndagi .am-in) */
+.am-in:focus,
+.am-in:focus-visible {
+  outline: 2px solid var(--color-navy);
+  outline-offset: 0;
+  border-color: var(--color-navy);
+}
+.am-wrap:focus-within {
+  outline: 2px solid var(--color-navy);
+  outline-offset: 0;
+}
+.am-wrap input:focus,
+.am-wrap input:focus-visible {
+  outline: none;
+}
+.am-bare:focus-visible {
+  outline: 2px solid var(--color-navy);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+.am-bare::placeholder {
+  color: var(--am-muted);
+}
+
+.am-btn {
+  transition: background-color 200ms var(--ease-soft);
+}
+.am-btn:hover:not(:disabled) {
+  background: var(--color-navy-deep);
+}
+.am-btn-o {
+  transition:
+    background-color 200ms,
+    border-color 200ms;
+}
+.am-btn-o:hover:not(:disabled) {
+  background: var(--color-sand);
+  border-color: var(--color-field);
+}
+.am-ghost:hover:not(:disabled) {
+  background: var(--color-sand);
+}
+.am-row {
+  transition: background-color 150ms;
+}
+.am-row:hover {
+  background: var(--am-bg);
+}
+.am-row[aria-selected='true'],
+.am-row[aria-selected='true']:hover {
+  background: var(--color-navy-soft);
+}
+.am-link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--color-field);
+}
+.am-link:hover {
+  text-decoration-color: var(--color-coral);
+}
+.am-nav:hover {
+  background: var(--color-sand);
+}
+.am-del:hover {
+  color: #121417;
+}
+.am-hs {
+  scrollbar-width: none;
+}
+.am-hs::-webkit-scrollbar {
+  display: none;
+}
+
+/* native <dialog> — drawer va tasdiqlash oynasi */
+dialog.am-dialog::backdrop {
+  background: rgba(18, 20, 23, 0.32);
+}
+dialog.am-dialog {
+  box-shadow: var(--am-shadow);
+}
+
+/* Markdown oldindan ko‘rish (prose-article'ning zichroq varianti) */
+.am-preview.prose-article {
+  font-size: 15px;
+  line-height: 1.65;
+}
+.am-preview.prose-article h2 {
+  font-size: 22px;
+  margin-top: 1.6em;
+}
+.am-preview.prose-article h3 {
+  font-size: 18px;
+}
+.am-preview .md-callout {
+  margin-top: 1.5em;
+  padding: 14px 18px;
+  border-radius: 6px;
+  background: var(--color-coral-soft);
+}
+.am-preview .md-callout-title {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .am-btn,
+  .am-btn-o,
+  .am-row {
+    transition: none;
+  }
+}
