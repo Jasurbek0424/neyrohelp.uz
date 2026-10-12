@@ -24,6 +24,7 @@ services:
 
   api:
     build: ../apps/api
+    image: neyrohelp-api
     restart: unless-stopped
     env_file: ./api.env
     environment:
@@ -41,7 +42,8 @@ services:
     cap_drop: [ALL]
 
   worker:
-    build: ../apps/api
+    # api bilan bitta image — install.sh faqat api'ni build qiladi, worker eski kodda qolmasin
+    image: neyrohelp-api
     restart: unless-stopped
     command: ["arq", "app.worker.WorkerSettings"]
     env_file: ./api.env
