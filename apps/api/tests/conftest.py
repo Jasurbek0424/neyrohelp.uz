@@ -1,4 +1,4 @@
-"""Test muhiti: neyromed_test bazasi, Redis db 15, vaqtinchalik media papka.
+"""Test muhiti: neyrohelp_test bazasi, Redis db 15, vaqtinchalik media papka.
 
 Muhit o‘zgaruvchilari app import qilinishidan OLDIN o‘rnatiladi (settings lru_cache).
 """
@@ -6,11 +6,12 @@ Muhit o‘zgaruvchilari app import qilinishidan OLDIN o‘rnatiladi (settings lr
 import os
 import tempfile
 
-_MEDIA = tempfile.mkdtemp(prefix="neyromed-media-")
+_MEDIA = tempfile.mkdtemp(prefix="neyrohelp-media-")
 os.environ.update(
     {
         "ENV": "test",
-        "DATABASE_URL": "postgresql+asyncpg://neyromed:neyromed@127.0.0.1:5432/neyromed_test",
+        # Lokal baza boshqa portda bo‘lsa: TEST_DATABASE_URL=...:5433/neyrohelp_test
+        "DATABASE_URL": os.environ.get("TEST_DATABASE_URL", "postgresql+asyncpg://neyrohelp:neyrohelp@127.0.0.1:5432/neyrohelp_test"),
         "REDIS_URL": "redis://127.0.0.1:6379/15",
         "MEDIA_DIR": _MEDIA,
         "COOKIE_SECURE": "false",
@@ -38,7 +39,7 @@ from app.main import app
 from app.models import Role, User
 
 assert settings.env == "test"
-assert settings.database_url.endswith("/neyromed_test")
+assert settings.database_url.endswith("/neyrohelp_test")
 
 ORIGIN = "http://localhost:3000"
 API = "/api/v1/admin"
@@ -95,7 +96,7 @@ class TUser:
 async def create_user(role: Role = Role.admin, *, totp: bool = True, password: str = PASSWORD, active: bool = True) -> TUser:
     secret = pyotp.random_base32() if totp else None
     n = next(_emails)
-    email = f"{role.value}{n}@neyromed.test"
+    email = f"{role.value}{n}@neyrohelp.test"
     async with SessionLocal() as s:
         u = User(
             email=email,

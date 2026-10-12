@@ -920,7 +920,7 @@ wheels = [
 ]
 
 [[package]]
-name = "neyromed-api"
+name = "neyrohelp-api"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

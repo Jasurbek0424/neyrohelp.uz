@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 export function SectionLabel({ children, light = false }: { children: ReactNode; light?: boolean }) {
   return (
     <div className={`flex items-center gap-3 text-sm font-medium ${light ? 'text-mist' : 'text-ink-2'}`}>
-      <span aria-hidden className="h-0.5 w-6 bg-coral" />
+      <span aria-hidden className="line-grow h-0.5 w-6 bg-coral" />
       {children}
     </div>
   )
@@ -25,7 +25,7 @@ export function SectionHeader({
   light?: boolean
 }) {
   return (
-    <div className="grid-site items-end gap-y-6">
+    <div className="reveal grid-site items-end gap-y-6">
       <div className="col-span-4 lg:col-span-7">
         <SectionLabel light={light}>{label}</SectionLabel>
         <h2 id={id} className="mt-5 text-h2 font-semibold text-balance">

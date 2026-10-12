@@ -420,9 +420,9 @@ export function PostEditor({ post }: { post?: PostAdmin }) {
             </h2>
             <div className="rounded-control border border-line bg-white p-3.5" aria-label="Qidiruvdagi ko‘rinishi" role="img">
               <div className="truncate text-[13px] leading-snug text-(--am-ok)">
-                neyromed.uz › {locale} › blog › {draft.slug || 'slug'}
+                neyrohelp.uz › {locale} › blog › {draft.slug || 'slug'}
               </div>
-              <div className="mt-1 text-lg leading-tight text-(--am-seo-link)">{seoTitle ? `${seoTitle}${lt(draft.seo.title, locale) ? '' : ' | NeyroMed'}` : 'Sarlavha'}</div>
+              <div className="mt-1 text-lg leading-tight text-(--am-seo-link)">{seoTitle ? `${seoTitle}${lt(draft.seo.title, locale) ? '' : ' | NeyroHelp'}` : 'Sarlavha'}</div>
               <div className="mt-1 line-clamp-2 text-[13px] leading-normal text-ink-2">{seoDesc || 'Tavsif'}</div>
             </div>
             <div className="mt-3.5 flex items-center justify-between">

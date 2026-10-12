@@ -2902,6 +2902,8 @@ export interface components {
         UserPatch: {
             /** Name */
             name?: string | null;
+            /** Email */
+            email?: string | null;
             role?: components["schemas"]["Role"] | null;
             /** Is Active */
             is_active?: boolean | null;

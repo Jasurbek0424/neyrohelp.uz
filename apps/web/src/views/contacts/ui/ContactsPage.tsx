@@ -115,7 +115,7 @@ export async function ContactsPage({ params }: Props) {
                       <PinIcon size={24} />
                     </span>
                     <span className="rounded-control bg-white px-4 py-3 text-center text-[15px] font-medium">
-                      NeyroMed{site.address ? ` · ${site.address}` : ''}
+                      NeyroHelp{site.address ? ` · ${site.address}` : ''}
                     </span>
                   </div>
                 </div>

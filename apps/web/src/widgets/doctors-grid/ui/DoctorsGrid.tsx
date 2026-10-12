@@ -37,7 +37,7 @@ export function DoctorsGrid({ locale, t, doctors, variant = 'home', className = 
             {t.doctors.others}
           </h2>
         )}
-        <ul className="reveal mt-12 grid grid-cols-2 gap-x-4 gap-y-10 lg:mt-14 lg:grid-cols-4 lg:gap-8">
+        <ul className="reveal-stagger mt-12 grid grid-cols-2 gap-x-4 gap-y-10 lg:mt-14 lg:grid-cols-4 lg:gap-8">
           {doctors.map((d) => (
             <li key={d.id}>
               <DoctorCard doctor={d} locale={locale} t={t} />

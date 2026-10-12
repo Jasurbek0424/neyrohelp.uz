@@ -24,7 +24,7 @@ CODE_TTL = 5 * 60
 MAX_TRIES = 5
 RESEND_AFTER = 30
 TRUST_COOKIE = "nm_trust"
-TRUST_AUDIENCE = "neyromed-trust"
+TRUST_AUDIENCE = "neyrohelp-trust"
 
 
 class TwofaError(Exception):
@@ -113,7 +113,7 @@ async def send_login_code(user: User) -> bool:
             "login",
             user.id,
             user.telegram_id,
-            "🔐 <b>NeyroMed admin</b>\nKirish kodi: {code}\n\nKod 5 daqiqa amal qiladi. Siz so‘ramagan bo‘lsangiz — parolingizni almashtiring.",
+            "🔐 <b>NeyroHelp admin</b>\nKirish kodi: {code}\n\nKod 5 daqiqa amal qiladi. Siz so‘ramagan bo‘lsangiz — parolingizni almashtiring.",
         )
     except TwofaError:
         await redis.delete(f"2fa:sent:{user.id}")
@@ -133,7 +133,7 @@ async def send_link_code(user: User, chat_id: int) -> None:
         "link",
         user.id,
         chat_id,
-        "🔗 <b>NeyroMed admin</b>\nTelegramni ulash kodi: {code}\n\nKodni admin paneldagi Profil sahifasiga kiriting.",
+        "🔗 <b>NeyroHelp admin</b>\nTelegramni ulash kodi: {code}\n\nKodni admin paneldagi Profil sahifasiga kiriting.",
         {"chat": chat_id},
     )
 

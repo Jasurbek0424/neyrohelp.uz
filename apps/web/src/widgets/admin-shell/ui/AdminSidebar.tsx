@@ -1,7 +1,6 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 
 import { LogoutButton } from '@/features/admin-logout'
@@ -12,6 +11,7 @@ import { Icon } from '@/shared/ui/admin/icons'
 import { LogoMark } from '@/shared/ui/Logo'
 
 import { activeKey, navGroups } from '../model/nav'
+import { HoverLink } from './HoverLink'
 
 export function AdminSidebar({ me }: { me: Me }) {
   const pathname = usePathname()
@@ -31,14 +31,14 @@ export function AdminSidebar({ me }: { me: Me }) {
       className="flex h-dvh shrink-0 flex-col border-r border-line bg-white text-ink max-md:hidden"
     >
       <div className={`flex h-16 shrink-0 items-center border-b border-line ${collapsed ? 'justify-center px-0' : 'justify-between px-5'}`}>
-        <Link href={adminPaths.dashboard} aria-label="NeyroMed — bosh panel" className="flex items-center gap-2.5 text-ink">
+        <HoverLink href={adminPaths.dashboard} aria-label="NeyroHelp — bosh panel" className="flex items-center gap-2.5 text-ink">
           <LogoMark size={28} />
           {!collapsed && (
             <span className="text-[17px] font-semibold tracking-[-0.02em]">
-              Neyro<span className="font-normal text-navy">Med</span>
+              Neyro<span className="font-normal text-navy">Help</span>
             </span>
           )}
-        </Link>
+        </HoverLink>
         {!collapsed && <span className="rounded-[4px] border border-line px-1.5 py-[3px] text-[11px] font-semibold text-ink-2">ADMIN</span>}
       </div>
 
@@ -53,7 +53,7 @@ export function AdminSidebar({ me }: { me: Me }) {
                 const on = i.key === current
                 const badge = i.badge === 'leads' && newCount > 0 ? newCount : null
                 return (
-                  <Link
+                  <HoverLink
                     key={i.key}
                     href={i.href}
                     aria-current={on ? 'page' : undefined}
@@ -71,7 +71,7 @@ export function AdminSidebar({ me }: { me: Me }) {
                           {badge}
                         </span>
                       ))}
-                  </Link>
+                  </HoverLink>
                 )
               })}
             </div>
@@ -91,7 +91,7 @@ export function AdminSidebar({ me }: { me: Me }) {
 
       <div className="border-t border-line p-3">
         <div className={`flex items-center gap-2.5 rounded-control p-2 ${collapsed ? 'flex-col px-0' : ''}`}>
-          <Link href={adminPaths.profile} className="flex min-w-0 flex-1 items-center gap-2.5" aria-label={collapsed ? `Profil: ${me.name}` : undefined}>
+          <HoverLink href={adminPaths.profile} className="flex min-w-0 flex-1 items-center gap-2.5" aria-label={collapsed ? `Profil: ${me.name}` : undefined}>
             <UserAvatar name={me.name} />
             {!collapsed && (
               <span className="min-w-0">
@@ -99,7 +99,7 @@ export function AdminSidebar({ me }: { me: Me }) {
                 <span className="block text-xs text-ink-2">{roleLabels[me.role]}</span>
               </span>
             )}
-          </Link>
+          </HoverLink>
           <LogoutButton />
         </div>
       </div>

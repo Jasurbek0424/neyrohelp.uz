@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query'
 
-import { api, ApiError } from '@/shared/api/client'
+import { api, ApiError, hasSessionCookie } from '@/shared/api/client'
 
 import type { LoginBody, LoginResponse, Me, PasswordBody, TotpSetup, UserEnvelope } from '../model/types'
 
@@ -15,6 +15,7 @@ export const sessionKeys = {
  * bu yerda bir marta /auth/refresh chaqiramiz (sahifa 15 daqiqadan keyin ochilganda).
  */
 export async function fetchMe(signal?: AbortSignal): Promise<Me> {
+  if (!hasSessionCookie()) throw new ApiError(401, 'not_authenticated')
   try {
     return await api<Me>('/admin/auth/me', { signal })
   } catch (e) {

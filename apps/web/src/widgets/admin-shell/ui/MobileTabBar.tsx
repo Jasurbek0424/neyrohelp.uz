@@ -1,10 +1,11 @@
 'use client'
 
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { adminPaths, canAccess, isActivePath, type Me } from '@/entities/session'
 import { Icon, type IconName } from '@/shared/ui/admin/icons'
+
+import { HoverLink } from './HoverLink'
 
 /** Ariza ekrani (A8) o‘zining pastki «Saqlash» paneliga ega — tab bar ko‘rsatilmaydi */
 export const hidesTabBar = (pathname: string) => /^\/admin\/arizalar\/\d+/.test(pathname)
@@ -26,11 +27,11 @@ export function MobileTabBar({ me }: { me: Me }) {
       {items.map((i) => {
         const on = i.match.some((m) => isActivePath(pathname, m))
         return (
-          <Link key={i.href} href={i.href} aria-current={on ? 'page' : undefined} className={`relative flex flex-1 flex-col items-center justify-center gap-1 ${on ? 'text-navy' : 'text-ink-2'}`}>
+          <HoverLink key={i.href} href={i.href} aria-current={on ? 'page' : undefined} className={`relative flex flex-1 flex-col items-center justify-center gap-1 ${on ? 'text-navy' : 'text-ink-2'}`}>
             {on && <span aria-hidden className="absolute top-0 h-0.5 w-6 bg-coral" />}
             <Icon name={i.icon} size={22} />
             <span className={`text-[11px] ${on ? 'font-semibold' : 'font-medium'}`}>{i.label}</span>
-          </Link>
+          </HoverLink>
         )
       })}
     </nav>

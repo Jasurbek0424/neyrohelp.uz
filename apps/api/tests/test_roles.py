@@ -85,20 +85,20 @@ async def test_forged_jwt_rejected():
 async def test_users_admin_only_and_self_protection(admin_client):
     c, admin = admin_client
     res = await c.post(
-        f"{API}/users", json={"email": "New.Op@neyromed.uz", "name": "Yangi", "role": "operator", "password": "short"}
+        f"{API}/users", json={"email": "New.Op@neyrohelp.uz", "name": "Yangi", "role": "operator", "password": "short"}
     )
     assert res.status_code == 422
     res = await c.post(
         f"{API}/users",
-        json={"email": "New.Op@neyromed.uz", "name": "Yangi", "role": "operator", "password": "Long-Enough-Pass-1"},
+        json={"email": "New.Op@neyrohelp.uz", "name": "Yangi", "role": "operator", "password": "Long-Enough-Pass-1"},
     )
     assert res.status_code == 201
     created = res.json()
-    assert created["email"] == "new.op@neyromed.uz"
+    assert created["email"] == "new.op@neyrohelp.uz"
     assert "password_hash" not in created and "totp_secret" not in created
     dup = await c.post(
         f"{API}/users",
-        json={"email": "new.op@neyromed.uz", "name": "Yangi", "role": "operator", "password": "Long-Enough-Pass-1"},
+        json={"email": "new.op@neyrohelp.uz", "name": "Yangi", "role": "operator", "password": "Long-Enough-Pass-1"},
     )
     assert dup.status_code == 409
 

@@ -11,6 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.config import settings
 from app.models import AuditLog, Delivery, Lead, LeadEvent, LeadStatus
 
+from . import lead_events
 from .phone import format_uz_phone
 
 log = logging.getLogger(__name__)
@@ -115,12 +116,14 @@ async def deliver(session: AsyncSession, lead: Lead) -> bool:
         lead.tg_last_error = None
         session.add(LeadEvent(lead_id=lead.id, kind="telegram_sent"))
         await session.commit()
+        await lead_events.publish(lead.id, "telegram")
         return True
     except (TelegramError, httpx.HTTPError) as err:
         lead.tg_delivery = Delivery.failed
         lead.tg_last_error = str(err)[:300]
         session.add(LeadEvent(lead_id=lead.id, kind="telegram_failed", meta={"attempt": lead.tg_attempts}))
         await session.commit()
+        await lead_events.publish(lead.id, "telegram")
         log.warning("lead %s telegram delivery failed: %s", lead.id, err)
         return False
 
@@ -213,5 +216,6 @@ async def handle_update(session: AsyncSession, update: dict) -> None:
             reply, changed = f"Status: {STATUS_TEXT[new]}", True
     await session.commit()
     if changed:
+        await lead_events.publish(lead.id, "updated")
         await sync(lead)
     await answer(q["id"], reply)

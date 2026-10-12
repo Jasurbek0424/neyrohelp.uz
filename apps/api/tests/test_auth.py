@@ -47,7 +47,7 @@ async def test_login_email_case_insensitive(client):
 async def test_login_wrong_password_and_unknown_email_same_response(client):
     u = await create_user(Role.operator, totp=False)
     wrong = await client.post(f"{API}/auth/login", json={"email": u.email, "password": "nope-nope-nope"})
-    unknown = await client.post(f"{API}/auth/login", json={"email": "ghost@neyromed.test", "password": "nope-nope-nope"})
+    unknown = await client.post(f"{API}/auth/login", json={"email": "ghost@neyrohelp.test", "password": "nope-nope-nope"})
     assert wrong.status_code == unknown.status_code == 401
     assert wrong.json() == unknown.json() == {"detail": "invalid_credentials"}
     assert "set-cookie" not in wrong.headers
@@ -78,21 +78,21 @@ async def test_lockout_after_five_failures(client):
 async def test_unknown_email_also_locks(client):
     """User enumeration yo‘q: mavjud bo‘lmagan email ham 5 xatodan keyin 423 qaytaradi."""
     for _ in range(5):
-        res = await client.post(f"{API}/auth/login", json={"email": "nobody@neyromed.test", "password": "x" * 12})
+        res = await client.post(f"{API}/auth/login", json={"email": "nobody@neyrohelp.test", "password": "x" * 12})
         assert res.status_code == 401
-    res = await client.post(f"{API}/auth/login", json={"email": "nobody@neyromed.test", "password": "x" * 12})
+    res = await client.post(f"{API}/auth/login", json={"email": "nobody@neyrohelp.test", "password": "x" * 12})
     assert res.status_code == 423
 
 
 async def test_login_rate_limit_per_ip(client):
     for i in range(10):
-        res = await client.post(f"{API}/auth/login", json={"email": f"x{i}@neyromed.test", "password": "y" * 12})
+        res = await client.post(f"{API}/auth/login", json={"email": f"x{i}@neyrohelp.test", "password": "y" * 12})
         assert res.status_code == 401
-    res = await client.post(f"{API}/auth/login", json={"email": "z@neyromed.test", "password": "y" * 12})
+    res = await client.post(f"{API}/auth/login", json={"email": "z@neyrohelp.test", "password": "y" * 12})
     assert res.status_code == 429
     # Boshqa IP — cheklanmagan
     res = await client.post(
-        f"{API}/auth/login", json={"email": "z@neyromed.test", "password": "y" * 12}, headers={"x-real-ip": "10.0.0.9"}
+        f"{API}/auth/login", json={"email": "z@neyrohelp.test", "password": "y" * 12}, headers={"x-real-ip": "10.0.0.9"}
     )
     assert res.status_code == 401
 
@@ -101,12 +101,12 @@ async def test_login_rate_limit_per_email(client):
     for i in range(10):
         res = await client.post(
             f"{API}/auth/login",
-            json={"email": "target@neyromed.test", "password": "y" * 12},
+            json={"email": "target@neyrohelp.test", "password": "y" * 12},
             headers={"x-real-ip": f"10.1.0.{i}"},
         )
         assert res.status_code in (401, 423)
     res = await client.post(
-        f"{API}/auth/login", json={"email": "target@neyromed.test", "password": "y" * 12}, headers={"x-real-ip": "10.2.0.1"}
+        f"{API}/auth/login", json={"email": "target@neyrohelp.test", "password": "y" * 12}, headers={"x-real-ip": "10.2.0.1"}
     )
     assert res.status_code == 429
 

@@ -22,8 +22,9 @@ const fsdRules = layers.map((layer, i) => ({
             message: `FSD: «${layer}» qatlami yuqoridagi «${upper}» qatlamini import qila olmaydi`,
           })),
           ...sliced.map((l) => ({
-            group: [`@/${l}/*/**`],
-            message: `FSD: «${l}» slice'iga faqat index.ts orqali murojaat qiling`,
+            // server.ts — server-only public API (index.ts client bundle'ga tushadi)
+            group: [`@/${l}/*/**`, `!@/${l}/*/server`],
+            message: `FSD: «${l}» slice'iga faqat index.ts (yoki server.ts) orqali murojaat qiling`,
           })),
         ],
       },
@@ -37,7 +38,7 @@ const routingRule = {
   rules: {
     'no-restricted-imports': [
       'error',
-      { patterns: sliced.map((l) => ({ group: [`@/${l}/*/**`], message: `FSD: «${l}» slice'iga faqat index.ts orqali` })) },
+      { patterns: sliced.map((l) => ({ group: [`@/${l}/*/**`, `!@/${l}/*/server`], message: `FSD: «${l}» slice'iga faqat index.ts (yoki server.ts) orqali` })) },
     ],
   },
 }

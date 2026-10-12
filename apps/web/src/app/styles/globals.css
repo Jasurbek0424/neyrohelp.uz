@@ -2,7 +2,7 @@
 @import 'tailwindcss';
 
 /*
- * NeyroMed dizayn tokenlari — kanvasdagi «Tokenlar va atomlar» boardi bilan bir xil.
+ * NeyroHelp dizayn tokenlari — kanvasdagi «Tokenlar va atomlar» boardi bilan bir xil.
  * Rang nomlari vazifaga qarab: ink (matn), navy (brend), coral (faqat kichik belgilar).
  */
 @theme {
@@ -132,12 +132,52 @@
   }
 }
 
+@keyframes line-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes elevate {
+  to {
+    box-shadow: 0 6px 24px -12px rgb(19 41 75 / 0.18);
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    .reveal {
+    .reveal,
+    .reveal-stagger > * {
       animation: reveal linear both;
       animation-timeline: view();
       animation-range: entry 0% cover 22%;
+    }
+    /* Bir qatordagi kartochkalar ketma-ket chiqadi: har ustun kechroq boshlanadi (2–4 ustunli to‘rlar) */
+    .reveal-stagger > :nth-child(4n + 2) {
+      animation-range: entry 4% cover 26%;
+    }
+    .reveal-stagger > :nth-child(4n + 3) {
+      animation-range: entry 8% cover 30%;
+    }
+    .reveal-stagger > :nth-child(4n + 4) {
+      animation-range: entry 12% cover 34%;
+    }
+    /* Seksiya yorlig‘idagi coral chiziq chapdan o‘sib chiqadi */
+    .line-grow {
+      transform-origin: left;
+      animation: line-grow linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 30%;
+    }
+  }
+  /* Sahifa pastga aylantirilganda header ostida yumshoq soya paydo bo‘ladi */
+  @supports (animation-timeline: scroll()) {
+    .header-elevate {
+      animation: elevate linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 120px;
     }
   }
   .rise {
@@ -146,6 +186,18 @@
   .rise-2 {
     animation: rise 700ms var(--ease-soft) 150ms both;
   }
+  .rise-3 {
+    animation: rise 700ms var(--ease-soft) 300ms both;
+  }
+}
+
+/* Tugma ichidagi strelka hover'da biroz oldinga siljiydi */
+.arrow-nudge svg {
+  transition: transform 250ms var(--ease-soft);
+}
+.arrow-nudge:hover svg,
+.arrow-nudge:focus-visible svg {
+  transform: translateX(3px);
 }
 
 @media (prefers-reduced-motion: reduce) {

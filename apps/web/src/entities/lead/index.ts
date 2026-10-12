@@ -2,6 +2,7 @@ export type { LeadStatus, TgDelivery, LeadRow, LeadDetail, LeadEvent, LeadCounts
 export { leadStatusMeta, leadStatusTabs, leadStatusChoices, isLeadStatus, LATE_MINUTES, tgMeta } from './model/status'
 export { eventTitle, eventPage, isLate, localeLabels } from './lib/events'
 export { leadKeys, dashboardKeys } from './api/keys'
+export { setLeadLive } from './model/live'
 export { leadListQuery, leadDetailQuery, leadCountsQuery, dashboardQuery, LEADS_PAGE_SIZE } from './api/queries'
 export { fetchLead, downloadLeadsExport } from './api/requests'
 export { useTakeLead, useUpdateLead, useUpdateLeadStatus } from './api/mutations'

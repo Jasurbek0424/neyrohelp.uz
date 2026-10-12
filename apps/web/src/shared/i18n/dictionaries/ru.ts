@@ -2,8 +2,8 @@ import type { Dictionary } from './uz'
 
 const ru: Dictionary = {
   meta: {
-    siteName: 'NeyroMed',
-    defaultTitle: 'NeyroMed — неврологический центр, Ташкент',
+    siteName: 'NeyroHelp',
+    defaultTitle: 'NeyroHelp — неврологический центр, Ташкент',
     defaultDescription:
       'Диагностика и лечение заболеваний нервной системы: опытные неврологи, диагностика и реабилитация. Запишитесь на приём онлайн.',
   },
@@ -23,6 +23,7 @@ const ru: Dictionary = {
     book: 'Записаться на приём',
     leaveRequest: 'Оставить заявку',
     call: 'Позвонить',
+    backToTop: 'Наверх страницы',
     more: 'Подробнее',
     allServices: 'Все услуги и цены',
     allDoctors: 'Все врачи',

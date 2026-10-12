@@ -1,0 +1,42 @@
+# Tizim Caddy (/etc/caddy) uchun sayt bloki — server boshqa loyihalar (Farm Bot) bilan bo'lishilganda.
+# install.sh buni /etc/caddy/neyrohelp.caddy ga SITE_HOST o'rniga haqiqiy host qo'yib yozadi va import qiladi.
+{$SITE_HOST} {
+	encode zstd gzip
+
+	header {
+		Strict-Transport-Security "max-age=63072000; includeSubDomains"
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		-Server
+	}
+
+	# Ichki endpointlar tashqaridan yopiq
+	@internal path /api/revalidate /api/revalidate/*
+	respond @internal 404
+
+	# Media: immutable kesh, faqat statik fayl (skript bajarilmaydi)
+	handle /media/* {
+		root * /srv/neyrohelp/media
+		uri strip_prefix /media
+		header Cache-Control "public, max-age=31536000, immutable"
+		header Content-Security-Policy "default-src 'none'; sandbox"
+		file_server
+	}
+
+	handle /api/* {
+		request_body {
+			max_size 12MB
+		}
+		reverse_proxy 127.0.0.1:8100 {
+			# Mijoz yuborgan soxta X-Real-IP / X-Forwarded-For hisobga olinmaydi — Caddy qayta yozadi
+			header_up X-Real-IP {client_ip}
+		}
+	}
+
+	handle {
+		header /_next/static/* Cache-Control "public, max-age=31536000, immutable"
+		reverse_proxy 127.0.0.1:3100 {
+			header_up X-Real-IP {client_ip}
+		}
+	}
+}

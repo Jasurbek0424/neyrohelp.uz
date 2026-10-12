@@ -60,6 +60,13 @@ async def patch_user(user_id: int, body: UserPatch, request: Request, user: Admi
         raise conflict("cannot_modify_self")
 
     meta: dict = {}
+    if "email" in data:
+        email = data["email"].strip().lower()
+        if email != target.email:
+            if await session.scalar(select(User.id).where(func.lower(User.email) == email, User.id != target.id)):
+                raise conflict("email_taken")
+            meta["email"] = {"old": target.email, "new": email}
+            target.email = email
     if "name" in data and data["name"] != target.name:
         meta["name"] = True
         target.name = data["name"]

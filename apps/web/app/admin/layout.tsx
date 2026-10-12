@@ -8,7 +8,7 @@ import '@/app/styles/globals.css'
 import '@/app/styles/admin.css'
 
 export const metadata: Metadata = {
-  title: { default: 'Boshqaruv paneli · NeyroMed', template: '%s · NeyroMed admin' },
+  title: { default: 'Boshqaruv paneli · NeyroHelp', template: '%s · NeyroHelp admin' },
   robots: { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false } },
   referrer: 'same-origin',
 }

@@ -1,5 +1,5 @@
 {
-  "name": "neyromed-web",
+  "name": "neyrohelp-web",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -11,6 +11,12 @@
     "typecheck": "tsc --noEmit",
     "api:types": "openapi-typescript http://127.0.0.1:8100/api/openapi.json -o src/shared/api/schema.d.ts"
   },
+  "browserslist": [
+    "chrome >= 111",
+    "edge >= 111",
+    "firefox >= 128",
+    "safari >= 16.4"
+  ],
   "engines": {
     "node": ">=20.9.0"
   },

@@ -2,7 +2,7 @@ import { locales } from '@/shared/i18n/config'
 import { ogContentType, ogSize } from '@/shared/lib/og'
 import { articleOgImage, articleStaticParams } from '@/views/article'
 
-export const alt = 'NeyroMed'
+export const alt = 'NeyroHelp'
 export const size = ogSize
 export const contentType = ogContentType
 export const revalidate = 3600

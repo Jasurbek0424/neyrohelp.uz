@@ -28,7 +28,7 @@ export function BlogGrid({ locale, t, posts, variant = 'home' }: { locale: Local
           {t.blog.related}
         </h2>
       )}
-      <ul className={`reveal grid gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3 ${variant === 'home' ? 'mt-12 lg:mt-14' : 'mt-10'}`}>
+      <ul className={`reveal-stagger grid gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3 ${variant === 'home' ? 'mt-12 lg:mt-14' : 'mt-10'}`}>
         {posts.map((p) => (
           <li key={p.id}>
             <PostCard post={p} locale={locale} t={t} />

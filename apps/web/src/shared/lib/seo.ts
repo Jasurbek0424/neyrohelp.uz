@@ -6,12 +6,12 @@ import { defaultLocale, locales, type Locale } from '@/shared/i18n/config'
 
 type MediaOut = components['schemas']['MediaOut']
 
-export const SITE_NAME = 'NeyroMed'
+export const SITE_NAME = 'NeyroHelp'
 
 /** OG `locale` formati */
 export const ogLocale: Record<Locale, string> = { uz: 'uz_UZ', ru: 'ru_RU', en: 'en_US' }
 
-/** '/uz/blog' → 'https://neyromed.uz/uz/blog'; to‘liq URL o‘zgarmaydi */
+/** '/uz/blog' → 'https://neyrohelp.uz/uz/blog'; to‘liq URL o‘zgarmaydi */
 export function absoluteUrl(path = ''): string {
   if (/^https?:\/\//.test(path)) return path
   return `${SITE_URL}${path.startsWith('/') ? path : `/${path}`}`

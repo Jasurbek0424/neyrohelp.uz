@@ -1,6 +1,6 @@
 """Favqulodda: foydalanuvchining 2FA'sini o‘chirish (telefon yo‘qolsa, Telegram ishlamasa).
 
-    uv run python -m app.reset_2fa admin@neyromed.uz
+    uv run python -m app.reset_2fa admin@neyrohelp.uz
 
 Faqat serverga SSH bilan kira oladigan odam ishlata oladi. Barcha sessiyalar bekor bo‘ladi,
 keyingi kirishda 2FA qaytadan sozlanadi.

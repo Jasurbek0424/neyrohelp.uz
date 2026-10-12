@@ -1,7 +1,7 @@
 const uz = {
   meta: {
-    siteName: 'NeyroMed',
-    defaultTitle: 'NeyroMed — nevrologiya markazi, Toshkent',
+    siteName: 'NeyroHelp',
+    defaultTitle: 'NeyroHelp — nevrologiya markazi, Toshkent',
     defaultDescription:
       'Asab tizimi kasalliklarini tashxislash va davolash: tajribali nevrologlar, diagnostika va reabilitatsiya. Qabulga onlayn yoziling.',
   },
@@ -21,6 +21,7 @@ const uz = {
     book: 'Qabulga yozilish',
     leaveRequest: 'Ariza qoldirish',
     call: 'Qo‘ng‘iroq qilish',
+    backToTop: 'Sahifa boshiga qaytish',
     more: 'Batafsil',
     allServices: 'Barcha xizmatlar va narxlar',
     allDoctors: 'Barcha shifokorlar',

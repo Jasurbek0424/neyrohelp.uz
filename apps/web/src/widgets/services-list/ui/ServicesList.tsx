@@ -26,7 +26,7 @@ export function ServicesList({ locale, t, groups }: { locale: Locale; t: Diction
           </>
         }
       />
-      <ul className="reveal mt-12 border-t border-ink lg:mt-14">
+      <ul className="reveal-stagger mt-12 border-t border-ink lg:mt-14">
         {groups.map((g, i) => (
           <li key={g.id}>
             <Link

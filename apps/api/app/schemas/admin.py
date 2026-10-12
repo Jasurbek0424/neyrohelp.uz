@@ -658,6 +658,7 @@ class UserIn(In):
 
 class UserPatch(In):
     name: Annotated[str, StringConstraints(strip_whitespace=True, min_length=2, max_length=120)] | None = None
+    email: EmailStr | None = Field(default=None, max_length=254)
     role: Role | None = None
     is_active: bool | None = None
 

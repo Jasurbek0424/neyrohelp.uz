@@ -337,7 +337,7 @@ export function DoctorForm({ doctor }: { doctor?: DoctorAdmin }) {
               <h2 id="seo-title" className="m-0 text-base font-semibold">
                 SEO
               </h2>
-              <LtField label="Sarlavha (title)" counter={60} maxLength={70} locale={locale} value={draft.seo.title} onChange={(v) => set('seo', { ...draft.seo, title: v })} error={errors[`seo.title.${locale}`]} placeholder={`${name} — NeyroMed`} />
+              <LtField label="Sarlavha (title)" counter={60} maxLength={70} locale={locale} value={draft.seo.title} onChange={(v) => set('seo', { ...draft.seo, title: v })} error={errors[`seo.title.${locale}`]} placeholder={`${name} — NeyroHelp`} />
               <LtField label="Tavsif (description)" multiline rows={3} counter={160} maxLength={200} locale={locale} value={draft.seo.description} onChange={(v) => set('seo', { ...draft.seo, description: v })} error={errors[`seo.description.${locale}`]} />
               <Notice tone="info">Bo‘sh qoldirilsa, sarlavha va tavsif profil ma’lumotlaridan avtomatik tuziladi.</Notice>
             </section>

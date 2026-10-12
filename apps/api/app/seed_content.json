@@ -1,9 +1,9 @@
 {
  "clinic": {
   "title": {
-   "uz": "NeyroMed klinikasi haqida",
-   "ru": "О клинике NeyroMed",
-   "en": "About NeyroMed"
+   "uz": "NeyroHelp klinikasi haqida",
+   "ru": "О клинике NeyroHelp",
+   "en": "About NeyroHelp"
   },
   "lead": {
    "uz": "Klinika asab tizimi kasalliklarini tashxislash va davolashga ixtisoslashgan: qabul, tekshiruv va kuzatuv bir joyda.",
@@ -639,7 +639,7 @@
  "settings": {
   "phone": "+998000000000",
   "phoneDisplay": "+998 [telefon]",
-  "telegram": "neyromed",
+  "telegram": "neyrohelp",
   "licenseNumber": "[—]",
   "address": {
    "uz": "Toshkent, [manzil]",

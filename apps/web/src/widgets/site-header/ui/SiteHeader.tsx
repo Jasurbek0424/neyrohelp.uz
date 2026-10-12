@@ -32,7 +32,7 @@ export function SiteHeader({ locale, t, site }: { locale: Locale; t: Dictionary;
       >
         {skipText[locale]}
       </a>
-      <header className="sticky top-0 z-40 bg-white">
+      <header className="header-elevate sticky top-0 z-40 bg-white">
         <div className="bg-navy text-[13px] text-mist">
           <div className="container-site flex h-9 items-center justify-between">
             <div className="flex gap-7">
@@ -44,7 +44,7 @@ export function SiteHeader({ locale, t, site }: { locale: Locale; t: Dictionary;
         </div>
         <div className="border-b border-line">
           <div className="container-site flex h-18 items-stretch gap-6 lg:gap-14">
-            <Link href={localePath(locale)} aria-label={`NeyroMed — ${t.nav.home}`} className="flex items-center">
+            <Link href={localePath(locale)} aria-label={`NeyroHelp — ${t.nav.home}`} className="flex items-center">
               <Logo />
             </Link>
             <div className="flex-1">

@@ -1,17 +1,20 @@
-# Farm Bot bilan bitta 4 GB VPS. Hamma portlar faqat 127.0.0.1 da — tashqariga faqat Caddy ochiq.
-name: neyromed
+# Hamma servislar ichki tarmoqda / 127.0.0.1 da — tashqariga faqat Caddy (80/443) ochiq.
+# Serverda tizim Caddy bo'lsa (Farm Bot bilan bitta server) — u Caddyfile.host orqali 127.0.0.1:8100/3100 ga proxy qiladi,
+# docker caddy ishga tushmaydi. Alohida serverda: docker compose --profile edge up -d
+# Ishga tushirish: deploy/install.sh (serverda) yoki deploy/push.sh (Mac'dan)
+name: neyrohelp
 services:
   postgres:
     image: postgres:16-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_DB: neyromed
-      POSTGRES_USER: neyromed
+      POSTGRES_DB: neyrohelp
+      POSTGRES_USER: neyrohelp
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?}
     command: ["postgres", "-c", "shared_buffers=128MB", "-c", "max_connections=60", "-c", "work_mem=4MB", "-c", "effective_cache_size=384MB"]
     volumes: [pgdata:/var/lib/postgresql/data, ./backups:/backups]
     mem_limit: 512m
-    healthcheck: { test: ["CMD-SHELL", "pg_isready -U neyromed"], interval: 10s, retries: 5 }
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -U neyrohelp"], interval: 10s, retries: 5 }
 
   redis:
     image: redis:7-alpine
@@ -24,11 +27,11 @@ services:
     restart: unless-stopped
     env_file: ./api.env
     environment:
-      DATABASE_URL: postgresql+asyncpg://neyromed:${POSTGRES_PASSWORD}@postgres:5432/neyromed
+      DATABASE_URL: postgresql+asyncpg://neyrohelp:${POSTGRES_PASSWORD}@postgres:5432/neyrohelp
       REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379/0
       WEB_INTERNAL_URL: http://web:3000
       MEDIA_DIR: /app/media
-    volumes: [media:/app/media]
+    volumes: ["${MEDIA_PATH:-/srv/neyrohelp/media}:/app/media"]
     depends_on: { postgres: { condition: service_healthy }, redis: { condition: service_started } }
     ports: ["127.0.0.1:8100:8100"]
     mem_limit: 320m
@@ -43,7 +46,7 @@ services:
     command: ["arq", "app.worker.WorkerSettings"]
     env_file: ./api.env
     environment:
-      DATABASE_URL: postgresql+asyncpg://neyromed:${POSTGRES_PASSWORD}@postgres:5432/neyromed
+      DATABASE_URL: postgresql+asyncpg://neyrohelp:${POSTGRES_PASSWORD}@postgres:5432/neyrohelp
       REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379/0
       WEB_INTERNAL_URL: http://web:3000
     depends_on: [api]
@@ -56,7 +59,8 @@ services:
   web:
     build:
       context: ../apps/web
-      # Build paytida API host tarmog‘ida 127.0.0.1:8100 da ochiq (avval `docker compose up -d api`)
+      # Build paytida API host tarmog‘ida 127.0.0.1:8100 da ochiq (avval `docker compose up -d api`).
+      # compose build (bake) network.host ruxsatini bermaydi — install.sh `docker build --network host` bilan yig'adi
       args: { NEXT_PUBLIC_SITE_URL: "${SITE_URL:?}", API_INTERNAL_URL: "http://127.0.0.1:8100" }
       network: host
     restart: unless-stopped
@@ -69,6 +73,23 @@ services:
     security_opt: [no-new-privileges:true]
     cap_drop: [ALL]
 
+  caddy:
+    image: caddy:2-alpine
+    profiles: [edge]
+    restart: unless-stopped
+    ports: ["80:80", "443:443", "443:443/udp"]
+    environment:
+      SITE_HOST: ${SITE_HOST:?}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ${MEDIA_PATH:-/srv/neyrohelp/media}:/srv/media:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on: [api, web]
+    mem_limit: 128m
+    security_opt: [no-new-privileges:true]
+
 volumes:
   pgdata:
-  media:
+  caddy_data:
+  caddy_config:

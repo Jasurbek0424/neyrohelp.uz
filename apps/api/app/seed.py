@@ -52,7 +52,7 @@ async def main() -> None:
             print("Baza bo‘sh emas — seed o‘tkazib yuborildi.")
             return
 
-        email = os.getenv("SEED_ADMIN_EMAIL", "admin@neyromed.uz")
+        email = os.getenv("SEED_ADMIN_EMAIL", "admin@neyrohelp.uz")
         password = os.getenv("SEED_ADMIN_PASSWORD") or secrets.token_urlsafe(12)
         s.add(User(email=email, name="Administrator", password_hash=hash_password(password), role=Role.admin))
 
@@ -159,7 +159,7 @@ async def main() -> None:
                     {"years": "[yil]–[yil]", "place": {"uz": "[Tibbiyot akademiyasi]"}, "detail": {"uz": "Davolash ishi"}},
                     {"years": "[yil]–[yil]", "place": {"uz": "[Tibbiyot akademiyasi]"}, "detail": {"uz": "Nevrologiya bo‘yicha rezidentura"}},
                 ],
-                career=[{"years": "[yil] — hozir", "place": {"uz": "NeyroMed"}, "detail": {"uz": "[lavozim]"}}],
+                career=[{"years": "[yil] — hozir", "place": {"uz": "NeyroHelp"}, "detail": {"uz": "[lavozim]"}}],
                 certificates=[{"title": {"uz": "[Sertifikat nomi]"}, "year": "[yil]"}],
                 order=(i + 1) * 10,
                 show_on_home=i < 4,
@@ -193,7 +193,7 @@ async def main() -> None:
             )
         await s.commit()
         print("Seed tugadi.")
-        print(f"Admin: {email}  parol: {password}  — birinchi kirishda 2FA ni yoqing va parolni almashtiring.")
+        print(f"Admin: {email}  parol: {password}  — birinchi kirishdan keyin parolni almashtiring.")
 
 
 if __name__ == "__main__":

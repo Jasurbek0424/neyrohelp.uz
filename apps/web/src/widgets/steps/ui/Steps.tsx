@@ -12,7 +12,7 @@ export function Steps({ t }: { t: Dictionary }) {
           title={t.home.stepsTitle}
           aside={<p className="text-[17px] leading-relaxed text-ink-2">{t.home.stepsLead}</p>}
         />
-        <ol className="reveal mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
+        <ol className="reveal-stagger mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
           {t.home.steps.map((s, i) => (
             <li key={s.title} className={`flex flex-col gap-3.5 ${i > 0 ? 'lg:border-l lg:border-line-strong lg:pl-8' : ''} lg:pr-8`}>
               <span className="text-sm font-semibold text-coral-ink">

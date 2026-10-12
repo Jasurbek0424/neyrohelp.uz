@@ -2,8 +2,8 @@ import type { Dictionary } from './uz'
 
 const en: Dictionary = {
   meta: {
-    siteName: 'NeyroMed',
-    defaultTitle: 'NeyroMed — neurology centre in Tashkent',
+    siteName: 'NeyroHelp',
+    defaultTitle: 'NeyroHelp — neurology centre in Tashkent',
     defaultDescription:
       'Diagnosis and treatment of nervous system disorders: experienced neurologists, diagnostics and rehabilitation. Book an appointment online.',
   },
@@ -23,6 +23,7 @@ const en: Dictionary = {
     book: 'Book an appointment',
     leaveRequest: 'Send a request',
     call: 'Call',
+    backToTop: 'Back to top',
     more: 'Learn more',
     allServices: 'All services and prices',
     allDoctors: 'All doctors',

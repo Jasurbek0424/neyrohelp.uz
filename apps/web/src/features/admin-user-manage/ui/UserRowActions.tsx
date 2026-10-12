@@ -12,6 +12,8 @@ import { ConfirmDialog, FormDialog } from '@/shared/ui/admin/ConfirmDialog'
 import { Select } from '@/shared/ui/admin/Field'
 import { toast } from '@/shared/ui/admin/Toast'
 
+import { EditUserDialog } from './EditUserDialog'
+
 /** Rolni almashtirish (optimistic) */
 export function UserRoleSelect({ user, disabled }: { user: AdminUser; disabled?: boolean }) {
   const update = useUpdateUser()
@@ -81,15 +83,19 @@ function SetPasswordDialog({ user, onClose }: { user: AdminUser; onClose: () => 
   )
 }
 
-/** Parol berish, faollashtirish/bloklash, barcha sessiyalarni bekor qilish */
+/** Tahrirlash (ism, email), parol berish, faollashtirish/bloklash, barcha sessiyalarni bekor qilish */
 export function UserRowActions({ user, isSelf }: { user: AdminUser; isSelf: boolean }) {
   const update = useUpdateUser()
   const revoke = useRevokeSessions()
   const [confirm, setConfirm] = useState<null | 'block' | 'revoke'>(null)
   const [pwOpen, setPwOpen] = useState(false)
+  const [editOpen, setEditOpen] = useState(false)
   const link = 'am-link cursor-pointer border-0 bg-transparent p-0 text-[13px] font-medium text-ink disabled:cursor-not-allowed disabled:opacity-40'
   return (
     <div className="flex items-center justify-end gap-4">
+      <button type="button" className={link} onClick={() => setEditOpen(true)}>
+        Tahrirlash
+      </button>
       <button type="button" className={link} disabled={isSelf} onClick={() => setPwOpen(true)}>
         Parol berish
       </button>
@@ -108,6 +114,7 @@ export function UserRowActions({ user, isSelf }: { user: AdminUser; isSelf: bool
       >
         {user.is_active ? 'Bloklash' : 'Faollashtirish'}
       </button>
+      <EditUserDialog user={user} open={editOpen} onClose={() => setEditOpen(false)} />
       <FormDialog open={pwOpen} onClose={() => setPwOpen(false)} title={`${user.name}: parol berish`} width={560}>
         {pwOpen && <SetPasswordDialog user={user} onClose={() => setPwOpen(false)} />}
       </FormDialog>

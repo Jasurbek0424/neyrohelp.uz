@@ -29,6 +29,12 @@ function readCookie(name: string): string | undefined {
     ?.slice(name.length + 1)
 }
 
+/**
+ * nm_csrf refresh cookie bilan bir xil muddatda yashaydi va logout'da o‘chiriladi —
+ * u yo‘q bo‘lsa sessiya ham yo‘q (me/refresh'ga 401 uchun so‘rov yuborish shart emas).
+ */
+export const hasSessionCookie = () => readCookie('nm_csrf') !== undefined
+
 let refreshing: Promise<boolean> | null = null
 let onSessionExpired: (() => void) | null = null
 

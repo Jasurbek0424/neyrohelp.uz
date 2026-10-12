@@ -23,10 +23,10 @@ export function AdminLoginPage() {
     <div className="flex min-h-dvh bg-white">
       <main id="admin-main" className="flex w-[560px] shrink-0 items-center justify-center px-4 py-12 max-lg:w-full">
         <div className="w-full max-w-[360px]">
-          <Link href="/uz" aria-label="NeyroMed — saytga qaytish" className="inline-flex items-center gap-2.5 text-ink">
+          <Link href="/uz" aria-label="NeyroHelp — saytga qaytish" className="inline-flex items-center gap-2.5 text-ink">
             <LogoMark size={32} />
             <span className="text-[19px] font-semibold tracking-[-0.02em]">
-              Neyro<span className="font-normal text-navy">Med</span>
+              Neyro<span className="font-normal text-navy">Help</span>
             </span>
           </Link>
           <h1 className="mt-14 mb-0 text-[26px] leading-tight font-semibold tracking-[-0.02em]">Boshqaruv paneliga kirish</h1>
@@ -46,7 +46,7 @@ export function AdminLoginPage() {
         <div className="relative flex items-center gap-2.5">
           <LogoMark size={32} inverted />
           <span className="text-[19px] font-semibold tracking-[-0.02em]">
-            Neyro<span className="font-normal text-mist">Med</span>
+            Neyro<span className="font-normal text-mist">Help</span>
           </span>
         </div>
         <div className="relative max-w-[600px]">

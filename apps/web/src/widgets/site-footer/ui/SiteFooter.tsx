@@ -60,7 +60,7 @@ export function SiteFooter({ locale, t, site }: { locale: Locale; t: Dictionary;
       <div className="container-site">
         <div className="flex flex-col gap-3 border-t border-white/15 py-6 text-[13px] text-mist sm:flex-row sm:items-center sm:justify-between">
           <span>
-            © {new Date().getFullYear()} NeyroMed
+            © {new Date().getFullYear()} NeyroHelp
             {site.license_number ? ` · ${t.common.license} № ${site.license_number}` : ''}
           </span>
           <Link href={localePath(locale, '/maxfiylik')} className="hover:text-white">

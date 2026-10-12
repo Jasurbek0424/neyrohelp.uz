@@ -10,6 +10,8 @@ import { ApiError, setSessionExpiredHandler } from '@/shared/api/client'
 import { EmptyState, ErrorState } from '@/shared/ui/admin/EmptyState'
 import { Skeleton } from '@/shared/ui/admin/Skeleton'
 
+import { useLeadEvents } from '../model/useLeadEvents'
+
 import { AdminSidebar } from './AdminSidebar'
 import { hidesTabBar, MobileTabBar } from './MobileTabBar'
 
@@ -52,6 +54,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const pathname = usePathname()
   const me = useQuery(meQueryOptions())
   const section = sectionForPath(pathname)
+  useLeadEvents(Boolean(me.data && canAccess(me.data.role, 'leads') && !me.data.totp_required))
 
   useEffect(() => {
     setSessionExpiredHandler(() => {

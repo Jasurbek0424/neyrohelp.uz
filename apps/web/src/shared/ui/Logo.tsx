@@ -20,7 +20,7 @@ export function Logo({ inverted = false }: { inverted?: boolean }) {
     <span className="flex items-center gap-2.5">
       <LogoMark inverted={inverted} />
       <span className="text-[21px] font-semibold tracking-[-0.02em]">
-        Neyro<span className={`font-normal ${inverted ? '' : 'text-navy'}`}>Med</span>
+        Neyro<span className={`font-normal ${inverted ? '' : 'text-navy'}`}>Help</span>
       </span>
     </span>
   )

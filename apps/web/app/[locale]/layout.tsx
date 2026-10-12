@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Pick<Props, 'params'>): Promi
 export default async function LocaleLayout({ children, params }: Props) {
   const locale = await localeFrom(params)
   return (
-    <html lang={htmlLang[locale]}>
+    <html lang={htmlLang[locale]} data-scroll-behavior="smooth">
       <body className="min-h-dvh">
         <SiteLayout locale={locale}>{children}</SiteLayout>
       </body>

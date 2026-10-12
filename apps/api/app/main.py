@@ -50,7 +50,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="NeyroMed API",
+    title="NeyroHelp API",
     version="1.0.0",
     default_response_class=ORJSONResponse,
     lifespan=lifespan,
@@ -74,7 +74,9 @@ class SecurityHeaders(BaseHTTPMiddleware):
         h.setdefault("Cross-Origin-Resource-Policy", "same-site")
         h.setdefault("Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'")
         if request.url.path.startswith("/api/v1/admin"):
-            h["Cache-Control"] = "no-store"
+            # SSE: no-transform — Next/Caddy oqimni gzip bilan buferlamasin
+            sse = h.get("content-type", "").startswith("text/event-stream")
+            h["Cache-Control"] = "no-store, no-transform" if sse else "no-store"
         return response
 
 

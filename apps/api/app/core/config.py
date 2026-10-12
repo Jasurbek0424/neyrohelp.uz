@@ -10,7 +10,7 @@ class Settings(BaseSettings):
 
     env: Literal["dev", "test", "prod"] = "dev"
 
-    database_url: str = "postgresql+asyncpg://neyromed:neyromed@127.0.0.1:5432/neyromed"
+    database_url: str = "postgresql+asyncpg://neyrohelp:neyrohelp@127.0.0.1:5432/neyrohelp"
     redis_url: str = "redis://127.0.0.1:6379/0"
 
     # Sirlar — production'da majburiy (validate_prod tekshiradi)

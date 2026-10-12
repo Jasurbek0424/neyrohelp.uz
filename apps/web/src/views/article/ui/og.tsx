@@ -8,5 +8,5 @@ export async function articleOgImage(params: Promise<{ locale: string; slug: str
   const locale = isLocale(raw) ? raw : 'uz'
   const post = await getPost(slug, locale)
   const footer = [post?.author?.full_name, SITE_URL.replace(/^https?:\/\//, '')].filter(Boolean).join(' · ')
-  return renderOgImage({ eyebrow: post?.category.title ?? 'Blog', title: post?.title ?? 'NeyroMed', footer })
+  return renderOgImage({ eyebrow: post?.category.title ?? 'Blog', title: post?.title ?? 'NeyroHelp', footer })
 }

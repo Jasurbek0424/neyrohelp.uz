@@ -25,8 +25,8 @@ export const settingsSchema: Record<SettingsKey, Group[]> = {
       fields: [
         { kind: 'text', key: 'phone', label: 'Telefon (E.164)', placeholder: '+998901234567', required: true, pattern: /^\+998\d{9}$/, patternMsg: 'Format: +998XXXXXXXXX', type: 'tel' },
         { kind: 'text', key: 'phone_display', label: 'Telefon (ko‘rinishi)', placeholder: '+998 90 123 45 67', max: 32 },
-        { kind: 'text', key: 'telegram', label: 'Telegram', placeholder: '@neyromed', nullable: true, pattern: /^@?[A-Za-z0-9_]{3,32}$/, patternMsg: '3–32 belgi: lotin harf, raqam, _' },
-        { kind: 'text', key: 'email', label: 'Email', placeholder: 'info@neyromed.uz', nullable: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, patternMsg: 'Email manzili noto‘g‘ri', type: 'email' },
+        { kind: 'text', key: 'telegram', label: 'Telegram', placeholder: '@neyrohelp', nullable: true, pattern: /^@?[A-Za-z0-9_]{3,32}$/, patternMsg: '3–32 belgi: lotin harf, raqam, _' },
+        { kind: 'text', key: 'email', label: 'Email', placeholder: 'info@neyrohelp.uz', nullable: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, patternMsg: 'Email manzili noto‘g‘ri', type: 'email' },
         { kind: 'lt', key: 'response_time', label: 'Javob vaqti', hint: 'Masalan: «15 daqiqa ichida qo‘ng‘iroq qilamiz»' },
       ],
     },

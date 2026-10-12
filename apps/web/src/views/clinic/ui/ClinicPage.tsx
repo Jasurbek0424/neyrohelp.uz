@@ -104,7 +104,7 @@ export async function ClinicPage({ params }: Props) {
       {clinic.equipment.length ? (
         <section className="container-site py-18 lg:py-28" aria-labelledby="clinic-equipment">
           <SectionHeader id="clinic-equipment" label={t.clinic.equipmentLabel} title={t.clinic.equipmentTitle} />
-          <ul className="reveal mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3">
+          <ul className="reveal-stagger mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3">
             {clinic.equipment.map((e, i) => (
               <li key={`${e.name}-${i}`}>
                 <Photo media={e.image} placeholder={`${t.common.photo} — ${e.name}`} className="aspect-[3/2]" sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw" />

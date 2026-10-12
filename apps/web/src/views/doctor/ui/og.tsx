@@ -8,8 +8,8 @@ export async function doctorOgImage(params: Promise<{ locale: string; slug: stri
   const locale = isLocale(raw) ? raw : 'uz'
   const doctor = await getDoctor(slug, locale)
   return renderOgImage({
-    eyebrow: doctor?.specialty.title ?? 'NeyroMed',
-    title: doctor?.full_name ?? 'NeyroMed',
+    eyebrow: doctor?.specialty.title ?? 'NeyroHelp',
+    title: doctor?.full_name ?? 'NeyroHelp',
     footer: SITE_URL.replace(/^https?:\/\//, ''),
   })
 }

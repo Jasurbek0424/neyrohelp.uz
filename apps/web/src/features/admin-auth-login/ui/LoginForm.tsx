@@ -162,7 +162,7 @@ export function LoginForm() {
           id="lg-email"
           type="email"
           autoComplete="username"
-          placeholder="nom@neyromed.uz"
+          placeholder="nom@neyrohelp.uz"
           className={inputClass}
           value={email}
           onChange={(e) => setEmail(e.target.value)}

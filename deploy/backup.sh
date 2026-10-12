@@ -4,7 +4,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 STAMP=$(date +%F)
 mkdir -p backups
-docker compose exec -T postgres pg_dump -U neyromed -Fc neyromed > "backups/db-$STAMP.dump"
-docker run --rm -v neyromed_media:/m -v "$PWD/backups:/b" alpine tar -czf "/b/media-$STAMP.tar.gz" -C /m .
+docker compose exec -T postgres pg_dump -U neyrohelp -Fc neyrohelp > "backups/db-$STAMP.dump"
+tar -czf "backups/media-$STAMP.tar.gz" -C "${MEDIA_PATH:-/srv/neyrohelp/media}" .
 find backups -type f -mtime +14 -delete
 # Serverdan tashqariga nusxa (rclone/rsync) — sozlang

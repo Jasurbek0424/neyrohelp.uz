@@ -1,4 +1,4 @@
-# NeyroMed — arxitektura
+# NeyroHelp — arxitektura
 
 ## Tizim
 

@@ -16,8 +16,8 @@ _ph = PasswordHasher(time_cost=3, memory_cost=64 * 1024, parallelism=2)
 _DUMMY_HASH = _ph.hash("dummy-password-for-timing")
 
 ALG = "HS256"
-ISSUER = "neyromed-api"
-AUDIENCE = "neyromed-admin"
+ISSUER = "neyrohelp-api"
+AUDIENCE = "neyrohelp-admin"
 
 ACCESS_COOKIE = "nm_access"
 REFRESH_COOKIE = "nm_refresh"
@@ -104,4 +104,4 @@ def verify_totp(secret: str | None, code: str | None) -> bool:
 
 
 def totp_uri(secret: str, email: str) -> str:
-    return pyotp.TOTP(secret).provisioning_uri(name=email, issuer_name="NeyroMed")
+    return pyotp.TOTP(secret).provisioning_uri(name=email, issuer_name="NeyroHelp")

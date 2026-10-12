@@ -3,21 +3,28 @@
 import io
 import logging
 import re
+from collections.abc import AsyncIterator
 from datetime import UTC, date, datetime, time, timedelta
+from time import monotonic
 from typing import Annotated, Any
 from zoneinfo import ZoneInfo
 
 from fastapi import APIRouter, HTTPException, Query, Request, Response, status
 from fastapi.concurrency import run_in_threadpool
+from fastapi.responses import StreamingResponse
 from openpyxl import Workbook
 from sqlalchemy import ColumnElement, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from app.core.deps import AdminOnly, LeadOperator, SessionDep
-from app.models import Lead, LeadEvent, LeadStatus
+from app.core.db import SessionLocal
+from app.core.deps import AdminOnly, LeadOperator, SessionDep, current_user, totp_required
+from app.core.redis import redis
+from app.core.security import ACCESS_COOKIE, decode_access_token
+from app.core.shutdown import stopping
+from app.models import Lead, LeadEvent, LeadStatus, Role
 from app.schemas.admin import LeadCounts, LeadDetail, LeadPage, LeadPatch, LeadRow
-from app.services import telegram
+from app.services import lead_events, telegram
 from app.services.telegram import STATUS_TEXT
 
 from ._common import audit, not_found, pages, patch_data
@@ -190,6 +197,57 @@ async def export_leads(
     )
 
 
+SSE_PING_SECONDS = 20
+
+
+async def _lead_stream(request: Request, deadline: float) -> AsyncIterator[str]:
+    pubsub = redis.pubsub()
+    try:
+        await pubsub.subscribe(lead_events.CHANNEL)
+    except Exception:
+        log.warning("lead events subscribe failed", exc_info=True)
+        return  # mijoz zaxira polling'ga o‘tadi
+    try:
+        yield "retry: 5000\n\n"
+        last = monotonic()
+        # Access token tugaguncha: keyin oqim yopiladi, panel sessiyani yangilab qayta ulanadi.
+        # Server to‘xtasa ham darhol yopiladi — aks holda reload/deploy ulanish yopilishini kutib qoladi
+        while not stopping.is_set() and datetime.now(UTC).timestamp() < deadline:
+            if await request.is_disconnected():
+                break
+            msg = await pubsub.get_message(ignore_subscribe_messages=True, timeout=1.0)
+            if msg:
+                yield f"event: lead\ndata: {msg['data']}\n\n"
+                last = monotonic()
+            elif monotonic() - last >= SSE_PING_SECONDS:
+                yield ": ping\n\n"  # proksi va brauzer ulanishni o‘lik deb yopmasin
+                last = monotonic()
+    except Exception:
+        log.warning("lead events stream failed", exc_info=True)
+    finally:
+        try:
+            await pubsub.aclose()
+        except Exception:
+            log.debug("pubsub close failed", exc_info=True)
+
+
+@router.get("/events", include_in_schema=False)
+async def lead_events_stream(request: Request):
+    """SSE: ariza yaratildi/o‘zgardi signali. SessionDep ishlatilmaydi — DB ulanishi oqim davomida band bo‘lmasin."""
+    async with SessionLocal() as session:
+        user = await current_user(request, session)
+    if user.role not in (Role.admin, Role.operator):
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "forbidden")
+    if totp_required(user):
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "totp_required")
+    token = decode_access_token(request.cookies.get(ACCESS_COOKIE, "")) or {}
+    return StreamingResponse(
+        _lead_stream(request, float(token.get("exp", 0))),
+        media_type="text/event-stream",
+        headers={"X-Accel-Buffering": "no"},  # Cache-Control: main.py → SecurityHeaders
+    )
+
+
 @router.get("/{lead_id}", response_model=LeadDetail)
 async def get_lead(lead_id: int, user: LeadOperator, session: SessionDep):
     return await load_detail(session, lead_id)
@@ -210,6 +268,7 @@ async def take_lead(lead_id: int, request: Request, user: LeadOperator, session:
     session.add(LeadEvent(lead_id=lead.id, kind="taken", actor=user.name, meta={"via": "admin"}))
     audit(session, request, user, "lead_take", "lead", lead.id)
     await session.commit()
+    await lead_events.publish(lead.id, "updated")
     await _sync_telegram(lead)
     return await load_detail(session, lead_id)
 
@@ -232,7 +291,9 @@ async def patch_lead(lead_id: int, body: LeadPatch, request: Request, user: Lead
         elif not lead.taken_by:
             lead.taken_by, lead.taken_by_user_id, lead.taken_at = user.name, user.id, datetime.now(UTC)
         session.add(
-            LeadEvent(lead_id=lead.id, kind="status", actor=user.name, meta={"status": new_status.value, "from": old.value})
+            LeadEvent(
+                lead_id=lead.id, kind="status", actor=user.name, meta={"status": new_status.value, "from": old.value}
+            )
         )
         audit(session, request, user, "lead_status", "lead", lead.id, {"from": old.value, "to": new_status.value})
         changed = True
@@ -247,5 +308,6 @@ async def patch_lead(lead_id: int, body: LeadPatch, request: Request, user: Lead
 
     await session.commit()
     if changed:
+        await lead_events.publish(lead.id, "updated")
         await _sync_telegram(lead)
     return await load_detail(session, lead_id)

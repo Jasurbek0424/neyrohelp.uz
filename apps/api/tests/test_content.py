@@ -226,7 +226,7 @@ async def test_posts_rules(editor_client, client):
 SITE = {
     "phone": "+998712345678",
     "phone_display": "+998 71 234 56 78",
-    "telegram": "neyromed",
+    "telegram": "neyrohelp",
     "address": {"uz": "Toshkent", "ru": "Ташкент"},
     "hours": [{"days": {"uz": "Du–Ju"}, "time": {"uz": "09:00–18:00"}}],
     "directions": [{"kind": "metro", "text": {"uz": "Metro yaqin"}}],

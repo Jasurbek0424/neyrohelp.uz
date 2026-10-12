@@ -32,7 +32,7 @@ export function HomeHero({ locale, t, home, site }: { locale: Locale; t: Diction
       <div className="container-site relative grid-site gap-y-10 py-12 lg:min-h-[800px] lg:py-20">
         <div className="col-span-4 flex flex-col lg:col-span-6">
           {home.hero_eyebrow ? (
-            <p className="flex items-center gap-2.5 text-[15px] font-medium text-ink-2">
+            <p className="rise flex items-center gap-2.5 text-[15px] font-medium text-ink-2">
               <span aria-hidden className="size-2 bg-coral" />
               {home.hero_eyebrow}
             </p>
@@ -40,8 +40,8 @@ export function HomeHero({ locale, t, home, site }: { locale: Locale; t: Diction
           <h1 id="home-title" className="mt-6 text-display font-semibold text-balance">
             {home.hero_title || t.meta.defaultTitle}
           </h1>
-          {home.hero_lead ? <p className="mt-6 max-w-[520px] text-[19px] leading-relaxed text-ink-2">{home.hero_lead}</p> : null}
-          <div className="mt-9 flex flex-wrap gap-3">
+          {home.hero_lead ? <p className="rise-2 mt-6 max-w-[520px] text-[19px] leading-relaxed text-ink-2">{home.hero_lead}</p> : null}
+          <div className="rise-2 mt-9 flex flex-wrap gap-3">
             <ButtonLink href="#ariza">
               {t.common.book}
               <ArrowRight />
@@ -51,7 +51,7 @@ export function HomeHero({ locale, t, home, site }: { locale: Locale; t: Diction
             </ButtonLink>
           </div>
           {site.stats.length ? (
-            <dl className="rise-2 mt-12 grid grid-cols-3 border-t border-ink lg:mt-auto">
+            <dl className="rise-3 mt-12 grid grid-cols-3 border-t border-ink lg:mt-auto">
               {site.stats.slice(0, 3).map((s, i) => (
                 <div key={`${s.label}-${i}`} className={`flex flex-col-reverse justify-end pt-5 ${i > 0 ? 'border-l border-line pl-4 sm:pl-5' : 'pr-4'}`}>
                   <dt className="mt-1.5 text-[13px] text-ink-2 sm:text-sm">{s.label}</dt>

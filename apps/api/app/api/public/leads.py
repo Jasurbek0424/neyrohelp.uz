@@ -9,7 +9,7 @@ from app.core.ratelimit import client_ip, enforce
 from app.core.security import constant_eq
 from app.models import Lead, LeadEvent
 from app.schemas.public import LeadAccepted, LeadIn
-from app.services import telegram
+from app.services import lead_events, telegram
 from app.services.phone import normalize_uz_phone
 
 router = APIRouter(tags=["public"])
@@ -40,6 +40,7 @@ async def create_lead(body: LeadIn, request: Request, session: SessionDep):
             existing.message = "\n—\n".join(x for x in (existing.message, body.message) if x)[:4000]
             session.add(LeadEvent(lead_id=existing.id, kind="duplicate", meta={"page": body.page}))
             await session.commit()
+            await lead_events.publish(existing.id, "updated")
         return LeadAccepted()
 
     lead = Lead(
@@ -54,6 +55,7 @@ async def create_lead(body: LeadIn, request: Request, session: SessionDep):
     await session.flush()
     session.add(LeadEvent(lead_id=lead.id, kind="created", meta={"page": body.page, "locale": body.locale}))
     await session.commit()
+    await lead_events.publish(lead.id, "created")
 
     # Javob darhol qaytadi; Telegramga yuborishni worker bajaradi (retry bilan)
     arq = getattr(request.app.state, "arq", None)

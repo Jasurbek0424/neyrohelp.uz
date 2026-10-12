@@ -66,7 +66,7 @@ export async function renderOgImage({ title, eyebrow, footer }: { title: string;
             <circle cx="10" cy="9.5" r="2.7" fill={C.coral} />
           </svg>
           <div style={{ display: 'flex', fontSize: 38, fontWeight: 600, letterSpacing: '-0.02em' }}>
-            Neyro<span style={{ fontWeight: 400 }}>Med</span>
+            Neyro<span style={{ fontWeight: 400 }}>Help</span>
           </div>
         </div>
 
