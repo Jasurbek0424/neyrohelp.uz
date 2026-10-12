@@ -53,7 +53,7 @@ export function AdminUsersPage() {
           ) : !users.data.length ? (
             <EmptyState title="Xodim yo‘q" />
           ) : (
-            <table className="w-full min-w-[940px] table-fixed border-collapse text-sm">
+            <table className="w-full min-w-[720px] table-fixed border-collapse text-sm">
               <thead className="bg-(--am-bg) text-left text-xs text-ink-2">
                 <tr className="h-10">
                   <th scope="col" className={th}>
@@ -73,7 +73,7 @@ export function AdminUsersPage() {
                   <th scope="col" className={`${th} w-[160px]`}>
                     Holat
                   </th>
-                  <th scope="col" className={`${th} w-[410px] text-right`}>
+                  <th scope="col" className={`${th} w-[180px] text-right`}>
                     <span className="sr-only">Amallar</span>
                   </th>
                 </tr>

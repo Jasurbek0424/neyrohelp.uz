@@ -8,6 +8,7 @@ import { Suspense, useEffect } from 'react'
 import { LoginForm } from '@/features/admin-auth-login'
 import { homePathFor, meQueryOptions } from '@/entities/session'
 import { LogoMark } from '@/shared/ui/Logo'
+import { NeuroConstellation } from '@/shared/ui/neuro-constellation'
 
 const points = ['Telegram guruh bilan sinxron arizalar', 'Uch tilda kontent: o‘zbek, rus, ingliz', 'Rollar: administrator, muharrir, operator']
 
@@ -38,11 +39,7 @@ export function AdminLoginPage() {
       </main>
 
       <aside aria-label="Panel haqida" className="relative flex min-w-0 flex-1 flex-col justify-between overflow-hidden bg-navy px-16 py-14 text-white max-lg:hidden">
-        <div aria-hidden className="absolute inset-y-0 right-16 left-16 grid grid-cols-12 border-r border-white/5">
-          {Array.from({ length: 12 }, (_, i) => (
-            <div key={i} className="border-l border-white/5" />
-          ))}
-        </div>
+        <NeuroConstellation tone="dark" className="absolute inset-x-16 top-24 bottom-[42%]" />
         <div className="relative flex items-center gap-2.5">
           <LogoMark size={32} inverted />
           <span className="text-[19px] font-semibold tracking-[-0.02em]">

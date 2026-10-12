@@ -5,30 +5,12 @@ import type { Locale } from '@/shared/i18n/config'
 import type { Dictionary } from '@/shared/i18n/dictionaries/uz'
 import { ButtonLink } from '@/shared/ui/Button'
 import { ArrowRight } from '@/shared/ui/Icons'
-import { Photo } from '@/shared/ui/Photo'
+import { NeuroConstellation } from '@/shared/ui/neuro-constellation'
 
-import { HeroGallery } from './HeroGallery'
-
-/** Bosh sahifa hero: chapda matn va raqamlar, o‘ngda foto galereya; fonda 12 ustunli ramka */
+/** Bosh sahifa hero: chapda matn va raqamlar, o‘ngda miyadan logoga aylanadigan nuqtalar */
 export function HomeHero({ locale, t, home, site }: { locale: Locale; t: Dictionary; home: HomePage; site: Site }) {
-  const placeholder = `${t.common.photo} — ${t.home.clinicLabel.toLowerCase()}`
-  const images = home.hero_images.filter((h) => h.image?.url)
-  const slides = images.length
-    ? images.map((h, idx) => ({
-        label: h.label,
-        node: <Photo media={h.image} priority={idx === 0} sizes="(min-width: 1440px) 640px, (min-width: 1024px) 45vw, 100vw" className="size-full" />,
-      }))
-    : [{ label: placeholder, node: <Photo media={null} placeholder={placeholder} className="size-full" /> }]
-
   return (
     <section className="relative" aria-labelledby="home-title">
-      <div aria-hidden className="container-site pointer-events-none absolute inset-0 hidden lg:block">
-        <div className="grid-site h-full">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} className="border-x border-[#F1EFEB]" />
-          ))}
-        </div>
-      </div>
       <div className="container-site relative grid-site gap-y-10 py-12 lg:min-h-[800px] lg:py-20">
         <div className="col-span-4 flex flex-col lg:col-span-6">
           {home.hero_eyebrow ? (
@@ -61,9 +43,7 @@ export function HomeHero({ locale, t, home, site }: { locale: Locale; t: Diction
             </dl>
           ) : null}
         </div>
-        <div className="rise col-span-4 min-h-96 lg:col-span-6">
-          <HeroGallery slides={slides} labels={{ prev: t.common.prev, next: t.common.next }} />
-        </div>
+        <NeuroConstellation className="relative col-span-4 aspect-square lg:col-span-6 lg:aspect-auto lg:min-h-[560px]" />
       </div>
     </section>
   )

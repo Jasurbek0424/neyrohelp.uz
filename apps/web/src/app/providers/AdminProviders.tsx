@@ -3,12 +3,19 @@
 import { MutationCache, QueryCache, QueryClientProvider, type QueryClient } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 import { useEffect, useState, type ReactNode } from 'react'
+import { z } from 'zod'
 
 import { sessionKeys, useAdminUi, type Me } from '@/entities/session'
 import { ApiError } from '@/shared/api/client'
 import { Toaster } from '@/shared/ui/admin/Toast'
 
 import { makeQueryClient } from './QueryProvider'
+
+/**
+ * Zod v4 JIT'ni `Function("")` bilan tekshiradi — admin'dagi qat'iy CSP (unsafe-eval yo'q) buni bloklaydi
+ * va brauzer Issues'da xato ko'rsatadi. Kichik formalar uchun JIT foydasi sezilmaydi.
+ */
+z.config({ jitless: true })
 
 /** Devtools faqat development'da: production build'da shart statik — import bundle'ga tushmaydi */
 const Devtools =

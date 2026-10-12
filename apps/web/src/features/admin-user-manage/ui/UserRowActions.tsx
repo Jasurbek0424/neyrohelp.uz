@@ -10,6 +10,7 @@ import { AdminButton } from '@/shared/ui/admin/Button'
 import { PasswordField } from '@/shared/ui/admin/PasswordField'
 import { ConfirmDialog, FormDialog } from '@/shared/ui/admin/ConfirmDialog'
 import { Select } from '@/shared/ui/admin/Field'
+import { Icon, type IconName } from '@/shared/ui/admin/icons'
 import { toast } from '@/shared/ui/admin/Toast'
 
 import { EditUserDialog } from './EditUserDialog'
@@ -83,6 +84,27 @@ function SetPasswordDialog({ user, onClose }: { user: AdminUser; onClose: () => 
   )
 }
 
+/** Ikonkali amal: yozuv aria-label va tooltip'da (hover/focus), xavfli amal hover'da qizil */
+function IconAction({ icon, label, onClick, disabled, danger }: { icon: IconName; label: string; onClick: () => void; disabled?: boolean; danger?: boolean }) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      disabled={disabled}
+      onClick={onClick}
+      className={`group/tip relative flex size-9 cursor-pointer items-center justify-center rounded-control border-0 bg-transparent text-ink-2 transition-colors hover:bg-(--am-bg) focus-visible:bg-(--am-bg) disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:bg-transparent ${danger ? 'hover:text-danger' : 'hover:text-ink'}`}
+    >
+      <Icon name={icon} size={18} />
+      <span
+        aria-hidden
+        className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-1.5 -translate-x-1/2 rounded-[4px] bg-ink px-2 py-1 text-xs font-medium whitespace-nowrap text-white opacity-0 transition-opacity group-hover/tip:opacity-100 group-focus-visible/tip:opacity-100 group-disabled/tip:hidden"
+      >
+        {label}
+      </span>
+    </button>
+  )
+}
+
 /** Tahrirlash (ism, email), parol berish, faollashtirish/bloklash, barcha sessiyalarni bekor qilish */
 export function UserRowActions({ user, isSelf }: { user: AdminUser; isSelf: boolean }) {
   const update = useUpdateUser()
@@ -90,30 +112,21 @@ export function UserRowActions({ user, isSelf }: { user: AdminUser; isSelf: bool
   const [confirm, setConfirm] = useState<null | 'block' | 'revoke'>(null)
   const [pwOpen, setPwOpen] = useState(false)
   const [editOpen, setEditOpen] = useState(false)
-  const link = 'am-link cursor-pointer border-0 bg-transparent p-0 text-[13px] font-medium text-ink disabled:cursor-not-allowed disabled:opacity-40'
   return (
-    <div className="flex items-center justify-end gap-4">
-      <button type="button" className={link} onClick={() => setEditOpen(true)}>
-        Tahrirlash
-      </button>
-      <button type="button" className={link} disabled={isSelf} onClick={() => setPwOpen(true)}>
-        Parol berish
-      </button>
-      <button type="button" className={link} disabled={isSelf} onClick={() => setConfirm('revoke')}>
-        Sessiyalarni yopish
-      </button>
-      <button
-        type="button"
-        className={link}
-        disabled={isSelf}
-        onClick={() =>
-          user.is_active
-            ? setConfirm('block')
-            : update.mutate({ id: user.id, patch: { is_active: true } }, { onSuccess: () => toast.success(`${user.name} faollashtirildi`), onError: (e) => toast.error(errorMessage(e)) })
-        }
-      >
-        {user.is_active ? 'Bloklash' : 'Faollashtirish'}
-      </button>
+    <div className="flex items-center justify-end gap-1">
+      <IconAction icon="edit" label="Tahrirlash" onClick={() => setEditOpen(true)} />
+      <IconAction icon="key" label="Parol berish" disabled={isSelf} onClick={() => setPwOpen(true)} />
+      <IconAction icon="logout" label="Sessiyalarni yopish" disabled={isSelf} onClick={() => setConfirm('revoke')} />
+      {user.is_active ? (
+        <IconAction icon="ban" label="Bloklash" danger disabled={isSelf} onClick={() => setConfirm('block')} />
+      ) : (
+        <IconAction
+          icon="check-circle"
+          label="Faollashtirish"
+          disabled={isSelf}
+          onClick={() => update.mutate({ id: user.id, patch: { is_active: true } }, { onSuccess: () => toast.success(`${user.name} faollashtirildi`), onError: (e) => toast.error(errorMessage(e)) })}
+        />
+      )}
       <EditUserDialog user={user} open={editOpen} onClose={() => setEditOpen(false)} />
       <FormDialog open={pwOpen} onClose={() => setPwOpen(false)} title={`${user.name}: parol berish`} width={560}>
         {pwOpen && <SetPasswordDialog user={user} onClose={() => setPwOpen(false)} />}
