@@ -114,9 +114,12 @@ if [ ! -f /root/neyrohelp-admin.txt ]; then
   ADMIN_PW="$(openssl rand -base64 15 | tr -d '/+=')-Nh7!"
   if docker compose run --rm -e SEED_ADMIN_EMAIL=admin@neyrohelp.uz -e SEED_ADMIN_PASSWORD="$ADMIN_PW" api python -m app.seed; then
     umask 077
-    printf 'Admin panel: https://%s/admin\nLogin: admin@neyrohelp.uz\nParol: %s\n' "$SITE_HOST" "$ADMIN_PW" > /root/neyrohelp-admin.txt
+    printf 'Admin panel: https://%s/secret-admin\nLogin: admin@neyrohelp.uz\nParol: %s\n' "$SITE_HOST" "$ADMIN_PW" > /root/neyrohelp-admin.txt
   fi
 fi
+
+# Eski yozuvni yangi host/yo'lga moslash
+[ -f /root/neyrohelp-admin.txt ] && sed -i "s|^Admin panel: .*|Admin panel: https://$SITE_HOST/secret-admin|" /root/neyrohelp-admin.txt
 
 log "API tayyor bo'lishini kutish"
 for _ in $(seq 1 30); do curl -fs -o /dev/null http://127.0.0.1:8100/api/v1/public/site?locale=uz && break; sleep 2; done
@@ -132,6 +135,13 @@ docker compose up -d --no-build --force-recreate web && docker compose up -d wor
 if systemctl is-active --quiet caddy && [ -f /etc/caddy/Caddyfile ]; then
   log "Tizim Caddy'ga sayt qo'shilmoqda: $SITE_HOST"
   sed "s|{\$SITE_HOST}|$SITE_HOST|" Caddyfile.host > /etc/caddy/neyrohelp.caddy
+  # www.<domen> (DNS shu serverga qarasa) va eski sslip manzil → asosiy domenga 301
+  ALIASES=""
+  case "$SITE_HOST" in *.sslip.io) ;; *)
+    ALIASES="${IP//./-}.sslip.io"
+    [ "$(getent ahostsv4 "www.$SITE_HOST" | awk 'NR==1{print $1}')" = "$IP" ] && ALIASES="www.$SITE_HOST, $ALIASES" ;;
+  esac
+  [ -n "$ALIASES" ] && printf '\n%s {\n\tredir https://%s{uri} permanent\n}\n' "$ALIASES" "$SITE_HOST" >> /etc/caddy/neyrohelp.caddy
   cp /etc/caddy/Caddyfile /etc/caddy/Caddyfile.bak
   grep -q '^import neyrohelp.caddy' /etc/caddy/Caddyfile || printf '\nimport neyrohelp.caddy\n' >> /etc/caddy/Caddyfile
   if caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1; then

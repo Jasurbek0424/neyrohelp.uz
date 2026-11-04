@@ -4,7 +4,7 @@ import { absoluteUrl } from '@/shared/lib/seo'
 
 export function buildRobots(): MetadataRoute.Robots {
   return {
-    rules: [{ userAgent: '*', allow: '/', disallow: ['/admin', '/api/'] }],
+    rules: [{ userAgent: '*', allow: '/', disallow: ['/api/'] }],
     sitemap: absoluteUrl('/sitemap.xml'),
   }
 }

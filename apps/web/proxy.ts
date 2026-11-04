@@ -4,12 +4,12 @@ import { defaultLocale, isLocale } from '@/shared/i18n/config'
 
 /**
  * 1) Tilsiz public manzil → /uz/... (yoki cookie'dagi til)
- * 2) /admin — qat'iy nonce CSP (admin sahifalari baribir dinamik, SEO kerak emas)
+ * 2) /secret-admin — qat'iy nonce CSP (admin sahifalari baribir dinamik, SEO kerak emas)
  */
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  if (pathname === '/admin' || pathname.startsWith('/admin/')) {
+  if (pathname === '/secret-admin' || pathname.startsWith('/secret-admin/')) {
     const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
     const isDev = process.env.NODE_ENV !== 'production'
     const csp = [

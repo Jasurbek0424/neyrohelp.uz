@@ -4,7 +4,7 @@
 
 ```
 Brauzer ──► Cloudflare (CDN, WAF, DDoS, TLS) ──► Caddy (VPS, HTTPS, xavfsizlik headerlari)
-                                                   ├─► web  : Next.js 16 (public SSR/ISR + /admin SPA)   :3100
+                                                   ├─► web  : Next.js 16 (public SSR/ISR + /secret-admin) :3100
                                                    ├─► api  : FastAPI (gunicorn+uvicorn)                 :8100  (/api/*)
                                                    └─► /media/* : statik fayllar (immutable kesh)
 api ──► PostgreSQL 16 (asosiy ma'lumot)   api ──► Redis 7 (kesh, rate-limit, arq navbat)

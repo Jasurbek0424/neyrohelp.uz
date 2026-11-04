@@ -32,7 +32,7 @@ uv run arq app.worker.WorkerSettings   # alohida terminalda (Telegram, rejalasht
 cd apps/web
 cp .env.example .env.local        # REVALIDATE_SECRET backend bilan bir xil
 npm install
-npm run dev                        # http://localhost:3000 · admin: /admin
+npm run dev                        # http://localhost:3000 · admin: /secret-admin
 ```
 
 Kirish: email + kuchli parol (kamida 12 belgi; kichik/katta harf, raqam, belgidan kamida 3 turi).
