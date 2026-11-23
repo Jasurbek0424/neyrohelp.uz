@@ -14,6 +14,7 @@ import { ClinicBlock } from '@/widgets/clinic-block'
 import { DoctorsGrid } from '@/widgets/doctors-grid'
 import { Faq } from '@/widgets/faq'
 import { HomeHero, QuickInfo } from '@/widgets/hero'
+import { HomeGallery } from '@/widgets/home-gallery'
 import { LeadSection } from '@/widgets/lead-section'
 import { ServicesList } from '@/widgets/services-list'
 import { Steps } from '@/widgets/steps'
@@ -44,6 +45,7 @@ export async function HomePage({ params }: Props) {
     <>
       <HomeHero locale={locale} t={t} home={home} site={site} />
       <QuickInfo t={t} site={site} />
+      <HomeGallery t={t} home={home} />
       <ServicesList locale={locale} t={t} groups={groups.filter((g) => g.show_on_home)} />
       <Steps t={t} />
       <DoctorsGrid locale={locale} t={t} doctors={doctors} />

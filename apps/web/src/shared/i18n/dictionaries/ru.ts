@@ -72,6 +72,7 @@ const ru: Dictionary = {
     doctorsLabel: 'Врачи',
     doctorsTitle: 'Вас примут опытные специалисты',
     clinicLabel: 'Клиника',
+    galleryLabel: 'Клиника в фотографиях',
     blogLabel: 'Блог',
     blogTitle: 'О здоровье нервной системы — простым языком',
     faqLabel: 'Вопросы',

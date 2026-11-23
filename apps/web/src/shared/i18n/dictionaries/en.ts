@@ -72,6 +72,7 @@ const en: Dictionary = {
     doctorsLabel: 'Doctors',
     doctorsTitle: 'Experienced specialists will see you',
     clinicLabel: 'Clinic',
+    galleryLabel: 'Our clinic in photos',
     blogLabel: 'Blog',
     blogTitle: 'Nervous system health in plain language',
     faqLabel: 'Questions',

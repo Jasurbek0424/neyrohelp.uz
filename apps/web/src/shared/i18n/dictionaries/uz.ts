@@ -70,6 +70,7 @@ const uz = {
     doctorsLabel: 'Shifokorlar',
     doctorsTitle: 'Sizni tajribali mutaxassislar qabul qiladi',
     clinicLabel: 'Klinika',
+    galleryLabel: 'Klinikamiz suratlarda',
     blogLabel: 'Blog',
     blogTitle: 'Asab salomatligi haqida oddiy tilda',
     faqLabel: 'Savollar',
