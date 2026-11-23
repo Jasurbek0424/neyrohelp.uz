@@ -71,6 +71,8 @@ const uz = {
     doctorsTitle: 'Sizni tajribali mutaxassislar qabul qiladi',
     clinicLabel: 'Klinika',
     galleryLabel: 'Klinikamiz suratlarda',
+    galleryPause: 'To‘xtatish',
+    galleryPlay: 'Davom ettirish',
     blogLabel: 'Blog',
     blogTitle: 'Asab salomatligi haqida oddiy tilda',
     faqLabel: 'Savollar',

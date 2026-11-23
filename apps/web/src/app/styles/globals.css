@@ -95,6 +95,14 @@
     linear-gradient(to bottom right, transparent calc(50% - 0.6px), var(--color-photo-line) 50%, transparent calc(50% + 0.6px));
 }
 
+/* Gorizontal karusel: scrollbar yashirin, surish va g‘ildirak ishlayveradi */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 /* Matnli havola: ingichka tag chiziq, hover'da coral */
 @utility link-underline {
   text-decoration: underline;
