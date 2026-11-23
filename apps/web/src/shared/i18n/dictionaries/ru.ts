@@ -176,6 +176,9 @@ const ru: Dictionary = {
     openGoogle: 'Google Maps',
     howToGet: 'Как добраться',
     mapTitle: 'Клиника на карте',
+    branches: 'Филиалы',
+    branchFallback: 'Филиал',
+    hours: 'Часы работы',
     directions: { metro: 'Метро', bus: 'Автобус', car: 'Автомобиль' },
   },
   notFound: {

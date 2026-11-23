@@ -39,6 +39,22 @@ async def _media_map(session: SessionDep, ids: list) -> dict[str, Media]:
     return {str(m.id): m for m in rows}
 
 
+def _branch(b: dict, locale: str) -> s.BranchRow:
+    return s.BranchRow(
+        name=t(b.get("name"), locale),
+        address=t(b.get("address"), locale),
+        landmark=t(b.get("landmark"), locale),
+        phone=b.get("phone"),
+        phone_display=b.get("phone_display") or b.get("phone") or "",
+        hours_short=t(b.get("hours_short"), locale),
+        lat=b.get("lat"),
+        lng=b.get("lng"),
+        yandex_map_url=b.get("yandex_map_url"),
+        google_map_url=b.get("google_map_url"),
+        directions=[s.DirectionRow(kind=x["kind"], text=t(x.get("text"), locale)) for x in b.get("directions", [])],
+    )
+
+
 @router.get("/site", response_model=s.SiteOut)
 async def site(locale: LocaleQ, session: SessionDep, response: Response):
     _cache_headers(response)
@@ -62,6 +78,8 @@ async def site(locale: LocaleQ, session: SessionDep, response: Response):
             lng=v.get("lng"),
             yandex_map_url=v.get("yandex_map_url"),
             google_map_url=v.get("google_map_url"),
+            branch_name=t(v.get("branch_name"), locale),
+            branches=[_branch(b, locale) for b in v.get("branches", [])],
         ).model_dump(mode="json")
 
     return await get_or_set(f"site:{locale}", ["settings"], load)

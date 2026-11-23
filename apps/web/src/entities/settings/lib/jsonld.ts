@@ -2,6 +2,7 @@ import type { Locale } from '@/shared/i18n/config'
 import { absoluteUrl, SITE_NAME } from '@/shared/lib/seo'
 
 import type { Site } from '../model/types'
+import { hasCoords, siteBranches } from './branches'
 import { telegramHandle } from './contacts'
 import { parseOpeningHours } from './openingHours'
 
@@ -33,5 +34,18 @@ export function clinicJsonLd(site: Site, locale: Locale, description?: string) {
     hasMap: site.yandex_map_url || site.google_map_url || undefined,
     openingHoursSpecification: parseOpeningHours(site.hours) ?? undefined,
     sameAs: tg ? [tg.href] : undefined,
+    department: site.branches?.length
+      ? siteBranches(site)
+          .slice(1)
+          .map((b, i) => ({
+            '@type': 'MedicalClinic',
+            '@id': absoluteUrl(`/#branch-${i + 1}`),
+            name: b.name ? `${SITE_NAME} — ${b.name}` : SITE_NAME,
+            telephone: b.phone,
+            address: b.address ? { '@type': 'PostalAddress', streetAddress: b.address, addressLocality: 'Toshkent', addressCountry: 'UZ' } : undefined,
+            geo: hasCoords(b) ? { '@type': 'GeoCoordinates', latitude: b.lat, longitude: b.lng } : undefined,
+            hasMap: b.yandex_map_url || b.google_map_url || undefined,
+          }))
+      : undefined,
   }
 }

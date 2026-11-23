@@ -174,6 +174,9 @@ const uz = {
     openGoogle: 'Google Maps',
     howToGet: 'Qanday yetib kelish',
     mapTitle: 'Klinika xaritada',
+    branches: 'Filiallar',
+    branchFallback: 'Filial',
+    hours: 'Ish vaqti',
     directions: { metro: 'Metro', bus: 'Avtobus', car: 'Avtomobil' } as Record<string, string>,
   },
   notFound: {

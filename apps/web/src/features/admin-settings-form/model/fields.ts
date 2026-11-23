@@ -18,6 +18,25 @@ export type Group = { title: string; fields: FieldDef[] }
 
 const httpsUrl = /^https:\/\/[^\s<>"']+$/
 
+const mapFields: FieldDef[] = [
+  { kind: 'number', key: 'lat', label: 'Kenglik (lat)', step: 'any', min: -90, max: 90 },
+  { kind: 'number', key: 'lng', label: 'Uzunlik (lng)', step: 'any', min: -180, max: 180 },
+  { kind: 'text', key: 'yandex_map_url', label: 'Yandex xarita havolasi', nullable: true, pattern: httpsUrl, patternMsg: 'https:// bilan boshlanishi kerak', max: 500 },
+  { kind: 'text', key: 'google_map_url', label: 'Google xarita havolasi', nullable: true, pattern: httpsUrl, patternMsg: 'https:// bilan boshlanishi kerak', max: 500 },
+]
+
+const directionsField: FieldDef = {
+  kind: 'list',
+  key: 'directions',
+  label: 'Qanday borish mumkin',
+  item: 'Yo‘l',
+  max: 10,
+  fields: [
+    { kind: 'select', key: 'kind', label: 'Transport', options: [{ value: 'metro', label: 'Metro' }, { value: 'bus', label: 'Avtobus' }, { value: 'car', label: 'Avtomobil' }] },
+    { kind: 'lt', key: 'text', label: 'Tavsif' },
+  ],
+}
+
 export const settingsSchema: Record<SettingsKey, Group[]> = {
   site: [
     {
@@ -31,23 +50,34 @@ export const settingsSchema: Record<SettingsKey, Group[]> = {
       ],
     },
     {
-      title: 'Manzil va xarita',
+      title: 'Asosiy filial — manzil va xarita',
       fields: [
+        { kind: 'lt', key: 'branch_name', label: 'Filial nomi', hint: 'Filiallar bo‘lsa saytda sarlavha sifatida chiqadi, masalan «Chilonzor filiali»' },
         { kind: 'lt', key: 'address', label: 'Manzil' },
         { kind: 'lt', key: 'landmark', label: 'Mo‘ljal' },
-        { kind: 'number', key: 'lat', label: 'Kenglik (lat)', step: 'any', min: -90, max: 90 },
-        { kind: 'number', key: 'lng', label: 'Uzunlik (lng)', step: 'any', min: -180, max: 180 },
-        { kind: 'text', key: 'yandex_map_url', label: 'Yandex xarita havolasi', nullable: true, pattern: httpsUrl, patternMsg: 'https:// bilan boshlanishi kerak', max: 500 },
-        { kind: 'text', key: 'google_map_url', label: 'Google xarita havolasi', nullable: true, pattern: httpsUrl, patternMsg: 'https:// bilan boshlanishi kerak', max: 500 },
+        ...mapFields,
+        directionsField,
+      ],
+    },
+    {
+      title: 'Qo‘shimcha filiallar',
+      fields: [
         {
           kind: 'list',
-          key: 'directions',
-          label: 'Qanday borish mumkin',
-          item: 'Yo‘l',
-          max: 10,
+          key: 'branches',
+          label: 'Filiallar',
+          item: 'Filial',
+          max: 20,
+          hint: 'Telefon yoki ish vaqti bo‘sh qolsa, asosiy filialniki ko‘rsatiladi',
           fields: [
-            { kind: 'select', key: 'kind', label: 'Transport', options: [{ value: 'metro', label: 'Metro' }, { value: 'bus', label: 'Avtobus' }, { value: 'car', label: 'Avtomobil' }] },
-            { kind: 'lt', key: 'text', label: 'Tavsif' },
+            { kind: 'lt', key: 'name', label: 'Filial nomi' },
+            { kind: 'lt', key: 'address', label: 'Manzil' },
+            { kind: 'lt', key: 'landmark', label: 'Mo‘ljal' },
+            { kind: 'lt', key: 'hours_short', label: 'Ish vaqti', hint: 'Masalan: «Du–Sha, 8:00–18:00»' },
+            { kind: 'text', key: 'phone', label: 'Telefon (E.164)', placeholder: '+998901234567', nullable: true, pattern: /^\+998\d{9}$/, patternMsg: 'Format: +998XXXXXXXXX', type: 'tel' },
+            { kind: 'text', key: 'phone_display', label: 'Telefon (ko‘rinishi)', placeholder: '+998 90 123 45 67', max: 32 },
+            ...mapFields,
+            directionsField,
           ],
         },
       ],

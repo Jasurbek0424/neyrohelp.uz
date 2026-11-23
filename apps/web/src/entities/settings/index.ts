@@ -1,5 +1,6 @@
 export type { Site, HoursRow, DirectionRow, StatRow } from './model/types'
 export { getSite } from './api/getSite'
 export { phoneLabel, telegramHandle } from './lib/contacts'
+export { siteBranches, hasCoords, type Branch } from './lib/branches'
 export { parseOpeningHours, type OpeningHoursSpec } from './lib/openingHours'
 export { clinicJsonLd, CLINIC_ID } from './lib/jsonld'

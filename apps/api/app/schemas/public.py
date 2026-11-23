@@ -36,6 +36,20 @@ class DirectionRow(Out):
     text: str
 
 
+class BranchRow(Out):
+    name: str = ""
+    address: str = ""
+    landmark: str = ""
+    phone: str | None = None
+    phone_display: str = ""
+    hours_short: str = ""
+    lat: float | None = None
+    lng: float | None = None
+    yandex_map_url: str | None = None
+    google_map_url: str | None = None
+    directions: list[DirectionRow] = []
+
+
 class SiteOut(Out):
     phone: str
     phone_display: str
@@ -53,6 +67,8 @@ class SiteOut(Out):
     lng: float | None = None
     yandex_map_url: str | None = None
     google_map_url: str | None = None
+    branch_name: str = ""
+    branches: list[BranchRow] = []
 
 
 class HeroImage(Out):

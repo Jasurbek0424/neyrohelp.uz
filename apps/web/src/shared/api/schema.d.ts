@@ -1071,6 +1071,93 @@ export interface components {
             /** Total */
             total: number;
         };
+        /** BranchIn */
+        BranchIn: {
+            /**
+             * @default {
+             *       "uz": ""
+             *     }
+             */
+            name: components["schemas"]["LText"];
+            /**
+             * @default {
+             *       "uz": ""
+             *     }
+             */
+            address: components["schemas"]["LText"];
+            /**
+             * @default {
+             *       "uz": ""
+             *     }
+             */
+            landmark: components["schemas"]["LText"];
+            /** Phone */
+            phone?: string | null;
+            /**
+             * Phone Display
+             * @default
+             */
+            phone_display: string;
+            /**
+             * @default {
+             *       "uz": ""
+             *     }
+             */
+            hours_short: components["schemas"]["LText"];
+            /** Lat */
+            lat?: number | null;
+            /** Lng */
+            lng?: number | null;
+            /** Yandex Map Url */
+            yandex_map_url?: string | null;
+            /** Google Map Url */
+            google_map_url?: string | null;
+            /** Directions */
+            directions?: components["schemas"]["DirectionIn"][];
+        };
+        /** BranchRow */
+        BranchRow: {
+            /**
+             * Name
+             * @default
+             */
+            name: string;
+            /**
+             * Address
+             * @default
+             */
+            address: string;
+            /**
+             * Landmark
+             * @default
+             */
+            landmark: string;
+            /** Phone */
+            phone?: string | null;
+            /**
+             * Phone Display
+             * @default
+             */
+            phone_display: string;
+            /**
+             * Hours Short
+             * @default
+             */
+            hours_short: string;
+            /** Lat */
+            lat?: number | null;
+            /** Lng */
+            lng?: number | null;
+            /** Yandex Map Url */
+            yandex_map_url?: string | null;
+            /** Google Map Url */
+            google_map_url?: string | null;
+            /**
+             * Directions
+             * @default []
+             */
+            directions: components["schemas"]["DirectionRow"][];
+        };
         /** BulkIn */
         BulkIn: {
             /** Items */
@@ -2639,6 +2726,16 @@ export interface components {
             yandex_map_url?: string | null;
             /** Google Map Url */
             google_map_url?: string | null;
+            /**
+             * Branch Name
+             * @default
+             */
+            branch_name: string;
+            /**
+             * Branches
+             * @default []
+             */
+            branches: components["schemas"]["BranchRow"][];
         };
         /** SiteSettings */
         SiteSettings: {
@@ -2693,6 +2790,14 @@ export interface components {
             yandex_map_url?: string | null;
             /** Google Map Url */
             google_map_url?: string | null;
+            /**
+             * @default {
+             *       "uz": ""
+             *     }
+             */
+            branch_name: components["schemas"]["LText"];
+            /** Branches */
+            branches?: components["schemas"]["BranchIn"][];
         };
         /** SitemapEntry */
         SitemapEntry: {

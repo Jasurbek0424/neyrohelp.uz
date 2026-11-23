@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { phoneLabel, telegramHandle, type Site } from '@/entities/settings'
+import { phoneLabel, siteBranches, telegramHandle, type Site } from '@/entities/settings'
 import { localePath, routes } from '@/shared/config/routes'
 import type { Locale } from '@/shared/i18n/config'
 import type { Dictionary } from '@/shared/i18n/dictionaries/uz'
@@ -45,7 +45,18 @@ export function SiteFooter({ locale, t, site }: { locale: Locale; t: Dictionary;
             </a>
           ) : null}
           {site.email ? <a href={`mailto:${site.email}`}>{site.email}</a> : null}
-          {site.address ? <address className="text-mist not-italic">{site.address}</address> : null}
+          {site.branches?.length ? (
+            siteBranches(site)
+              .filter((b) => b.address)
+              .map((b, i) => (
+                <address key={i} className="text-mist not-italic">
+                  {b.name ? <span className="block text-white">{b.name}</span> : null}
+                  {b.address}
+                </address>
+              ))
+          ) : site.address ? (
+            <address className="text-mist not-italic">{site.address}</address>
+          ) : null}
         </div>
         <div className="col-span-4 flex flex-col gap-3 text-[15px] lg:col-span-3">
           <h2 className="mb-1 text-[13px] font-normal text-mist">{t.footer.hours}</h2>

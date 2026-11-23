@@ -176,6 +176,9 @@ const en: Dictionary = {
     openGoogle: 'Google Maps',
     howToGet: 'How to get here',
     mapTitle: 'Clinic on the map',
+    branches: 'Branches',
+    branchFallback: 'Branch',
+    hours: 'Opening hours',
     directions: { metro: 'Metro', bus: 'Bus', car: 'Car' },
   },
   notFound: {

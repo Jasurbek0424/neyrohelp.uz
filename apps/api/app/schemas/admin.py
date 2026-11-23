@@ -574,6 +574,23 @@ class DirectionIn(In):
     text: LText = LText()
 
 
+Phone = Annotated[str, StringConstraints(pattern=r"^\+998\d{9}$")]
+
+
+class BranchIn(In):
+    name: LText = LText()
+    address: LText = LText()
+    landmark: LText = LText()
+    phone: Phone | None = None
+    phone_display: Annotated[str, StringConstraints(strip_whitespace=True, max_length=32)] = ""
+    hours_short: LText = LText()
+    lat: float | None = Field(default=None, ge=-90, le=90)
+    lng: float | None = Field(default=None, ge=-180, le=180)
+    yandex_map_url: Url | None = None
+    google_map_url: Url | None = None
+    directions: list[DirectionIn] = Field(default_factory=list, max_length=10)
+
+
 class SiteSettings(In):
     phone: Annotated[str, StringConstraints(pattern=r"^\+998\d{9}$")]
     phone_display: Annotated[str, StringConstraints(strip_whitespace=True, max_length=32)] = ""
@@ -591,6 +608,8 @@ class SiteSettings(In):
     lng: float | None = Field(default=None, ge=-180, le=180)
     yandex_map_url: Url | None = None
     google_map_url: Url | None = None
+    branch_name: LText = LText()
+    branches: list[BranchIn] = Field(default_factory=list, max_length=20)
 
 
 class HeroImageIn(In):

@@ -261,6 +261,45 @@ async def test_settings_strict_and_public(editor_client, client):
         assert (await c.put(f"{API}/settings/site", json=body)).status_code == 422, body
 
 
+BRANCH = {
+    "name": {"uz": "Yunusobod filiali", "ru": "Филиал Юнусабад"},
+    "address": {"uz": "Yunusobod, 5", "ru": "Юнусабад, 5"},
+    "phone": "+998901112233",
+    "lat": 41.36,
+    "lng": 69.28,
+    "google_map_url": "https://maps.app.goo.gl/xyz",
+    "directions": [{"kind": "bus", "text": {"uz": "12-avtobus"}}],
+}
+
+
+async def test_site_branches(editor_client, client):
+    c, _ = editor_client
+    body = {**SITE, "branch_name": {"uz": "Chilonzor filiali"}, "branches": [BRANCH]}
+    res = await c.put(f"{API}/settings/site", json=body)
+    assert res.status_code == 200, res.text
+    assert res.json()["branches"][0]["phone"] == "+998901112233"
+
+    pub = (await client.get(f"{PUB}/site", params={"locale": "ru"})).json()
+    assert pub["branch_name"] == "Chilonzor filiali"
+    [b] = pub["branches"]
+    assert b["name"] == "Филиал Юнусабад" and b["address"] == "Юнусабад, 5"
+    assert b["phone_display"] == "+998901112233" and b["lat"] == 41.36
+    assert b["directions"] == [{"kind": "bus", "text": "12-avtobus"}]
+
+    # filial o‘chirilsa ommaviy javobdan ham ketadi (kesh tozalanadi)
+    assert (await c.put(f"{API}/settings/site", json={**body, "branches": []})).status_code == 200
+    assert (await client.get(f"{PUB}/site", params={"locale": "ru"})).json()["branches"] == []
+
+    bad = [
+        {**BRANCH, "phone": "123"},
+        {**BRANCH, "lat": 100},
+        {**BRANCH, "yandex_map_url": "javascript:alert(1)"},
+        {**BRANCH, "evil": 1},
+    ]
+    for br in bad:
+        assert (await c.put(f"{API}/settings/site", json={**SITE, "branches": [br]})).status_code == 422, br
+
+
 async def test_settings_media_resolved(editor_client, client):
     c, _ = editor_client
     img = await make_image(c)

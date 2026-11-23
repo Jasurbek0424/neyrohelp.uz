@@ -137,7 +137,7 @@ function FieldView({ def, obj, onPatch, path, ctx }: { def: FieldDef; obj: Obj; 
           {def.hint && <p className="mt-0 mb-2 text-xs text-ink-2">{def.hint}</p>}
           <ol className="m-0 flex list-none flex-col gap-3 p-0">
             {items.map((it, i) => (
-              <li key={i} className="rounded-control border border-line bg-(--am-bg) p-4">
+              <li key={i} className={`rounded-control border border-line p-4 ${path ? 'bg-white' : 'bg-(--am-bg)'}`}>
                 <div className="mb-3 flex items-center justify-between">
                   <span className="text-[13px] font-semibold">
                     {def.item} {i + 1}
@@ -160,7 +160,7 @@ function FieldView({ def, obj, onPatch, path, ctx }: { def: FieldDef; obj: Obj; 
                 </div>
                 <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">
                   {def.fields.map((f) => (
-                    <div key={f.key} className={f.kind === 'lt' && f.multiline ? 'col-span-2 max-md:col-span-1' : ''}>
+                    <div key={f.key} className={f.kind === 'list' || (f.kind === 'lt' && f.multiline) ? 'col-span-2 max-md:col-span-1' : ''}>
                       <FieldView def={f} obj={it} path={`${path}${def.key}.${i}.`} ctx={ctx} onPatch={(pp) => setItems(items.map((x, j) => (j === i ? { ...x, ...pp } : x)))} />
                     </div>
                   ))}
